@@ -22,25 +22,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.api.data.type;
+package org.spongepowered.api.util;
 
-import org.spongepowered.api.CatalogType;
-import org.spongepowered.api.text.translation.Translatable;
-import org.spongepowered.api.util.annotation.CatalogedBy;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-/**
- * Represents a Villager Career. A career can define a more specified list of
- * trade offers the villager can give to a player.
- */
-@CatalogedBy(Careers.class)
-public interface Career extends CatalogType, Translatable {
+import java.util.function.Supplier;
 
-    /**
-     * Gets the parent profession of this career. The profession is permanent
-     * and can not be changed.
-     *
-     * @return The profession this career belongs to
-     */
-    Profession getProfession();
+import javax.annotation.Nullable;
+
+public final class Suppliers {
+
+    private Suppliers() {}
+
+    public static <T> Supplier<T> ofStatic(@Nullable T element) {
+        return () -> element;
+    }
 
 }
