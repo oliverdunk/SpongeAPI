@@ -36,7 +36,7 @@ public interface Property<K, V> extends Comparable<Property<?, ?>> {
 
     /**
      * Operator used to indicate to a query what operation to use when comparing
-     * this property with properties present on an item stack.
+     * this property with properties present on an element.
      */
     enum Operator {
 
@@ -176,7 +176,7 @@ public interface Property<K, V> extends Comparable<Property<?, ?>> {
     }
 
     /**
-     * Get the key for this property. Key is only used if an item stack can have
+     * Get the key for this property. Key is only used if an element can have
      * more than one property of a particular type. If the property has no
      * specific key, the property class name is returned so that properties of
      * the same type are implicitly comparable.

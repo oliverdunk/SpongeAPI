@@ -34,8 +34,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Queue;
 
-import javax.annotation.Nullable;
-
 /**
  * Base interface for queryable inventories.
  *
@@ -46,11 +44,11 @@ public interface Inventory extends Iterable<Inventory>, Nameable {
 
     /**
      * Get the parent {@link Inventory} of this {@link Inventory}.
-     *
-     * @return the parent inventory, returns null if there is no parent (this is
-     *      a top-level inventory
+     * 
+     * @return the parent inventory, returns this inventory if there is no
+     *      parent (this is a top-level inventory)
      */
-    @Nullable Inventory parent();
+    Inventory parent();
 
     /**
      * Returns an iterable view of all {@link Slot}s (leaf nodes) in this
