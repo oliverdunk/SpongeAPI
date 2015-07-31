@@ -38,8 +38,12 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import org.spongepowered.api.CatalogType;
 import org.spongepowered.api.Game;
+import org.spongepowered.api.GameProfile;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.player.Player;
+import org.spongepowered.api.entity.player.User;
+import org.spongepowered.api.service.profile.GameProfileResolver;
+import org.spongepowered.api.service.user.UserStorage;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.TextBuilder;
 import org.spongepowered.api.text.Texts;
@@ -111,6 +115,17 @@ public final class GenericArguments {
      */
     public static CommandElement player(Text key, Game game) {
         return new PlayerCommandElement(key, game, false);
+    }
+
+    /**
+     * Expect an argument to represent a player who has been online at some point, as a {@link User}
+     *
+     * @param key The key to store under
+     * @param game The game to find users in
+     * @return the argument
+     */
+    public static CommandElement user(Text key, Game game) {
+        return new UserCommandElement(key, game);
     }
 
     /**
@@ -888,6 +903,46 @@ public final class GenericArguments {
         @Override
         public Text getUsage(CommandSource src) {
             return Texts.of(Joiner.on(' ').join(this.expectedArgs));
+        }
+    }
+
+    private static class UserCommandElement extends PatternMatchingCommandElement {
+        private final Game game;
+        private final PlayerCommandElement possiblePlayer;
+
+        protected UserCommandElement(@Nullable Text key, Game game) {
+            super(key);
+            this.game = game;
+            this.possiblePlayer = new PlayerCommandElement(key, game, false);
+        }
+
+        @Nullable
+        @Override
+        protected Object parseValue(CommandSource source, CommandArgs args) throws ArgumentParseException {
+            Object state = args.getState();
+            try {
+                return possiblePlayer.parseValue(source, args);
+            } catch (ArgumentParseException ex) {
+                args.setState(state);
+                return super.parseValue(source, args);
+            }
+        }
+
+        @Override
+        protected Iterable<String> getChoices(CommandSource source) {
+            return Iterables.transform(game.getServiceManager().provideUnchecked(UserStorage.class).getAll(),
+                    new Function<GameProfile, String>() {
+                        @Nullable
+                        @Override
+                        public String apply(@Nullable GameProfile input) {
+                            return input.getName();
+                        }
+                    });
+        }
+
+        @Override
+        protected Object getValue(String choice) throws IllegalArgumentException {
+            return game.getServiceManager().provideUnchecked(UserStorage.class).get(choice).get();
         }
     }
 
