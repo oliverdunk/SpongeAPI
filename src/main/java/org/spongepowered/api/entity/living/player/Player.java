@@ -42,7 +42,6 @@ import org.spongepowered.api.scoreboard.Scoreboard;
 import org.spongepowered.api.text.Text;
 
 import java.time.Instant;
-import java.util.Locale;
 
 /**
  * A Player represents the in-game entity of a human playing on a server.
