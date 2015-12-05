@@ -59,6 +59,7 @@ public interface Player extends Humanoid, User, LocatedSource, RemoteSource, Vie
      *
      * @return The player's locale
      */
+    @Override
     Locale getLocale();
 
     /**

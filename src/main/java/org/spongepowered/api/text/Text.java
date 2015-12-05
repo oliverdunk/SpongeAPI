@@ -39,6 +39,7 @@ import org.spongepowered.api.text.format.TextStyle;
 import org.spongepowered.api.text.translation.Translation;
 
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -65,6 +66,12 @@ import javax.annotation.Nullable;
  * @see Score
  */
 public abstract class Text implements TextRepresentable {
+
+    /**
+     * The default locale used for texts when the receiver's {@link Locale} is
+     * unknown.
+     */
+    public static final Locale DEFAULT_LOCALE = Locale.US;
 
     protected final TextFormat format;
     protected final ImmutableList<Text> children;

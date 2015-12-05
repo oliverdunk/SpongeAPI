@@ -28,6 +28,8 @@ import org.spongepowered.api.service.permission.Subject;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.sink.MessageSink;
 
+import java.util.Locale;
+
 /**
  * Something that can execute commands.
  *
@@ -42,6 +44,18 @@ public interface CommandSource extends Subject {
      * @return The name of this command source
      */
     String getName();
+
+    /**
+     * Gets the locale used by this command source. If this
+     * {@link CommandSource} does have a {@link Locale} configured or does not
+     * support configuring a {@link Locale}, {@link Text#DEFAULT_LOCALE} is
+     * used.
+     *
+     * @return The locale used by this command source
+     */
+    default Locale getLocale() {
+        return Text.DEFAULT_LOCALE;
+    }
 
     /**
      * Sends the formatted text message to source when possible. If text formatting
