@@ -89,7 +89,7 @@ import org.spongepowered.api.event.cause.entity.damage.DamageModifier;
 import org.spongepowered.api.event.cause.entity.health.HealthModifier;
 import org.spongepowered.api.event.command.MessageSinkEvent;
 import org.spongepowered.api.event.command.SendCommandEvent;
-import org.spongepowered.api.event.command.TabCompleteCommandEvent;
+import org.spongepowered.api.event.command.TabCompleteEvent;
 import org.spongepowered.api.event.data.ChangeDataHolderEvent;
 import org.spongepowered.api.event.entity.AffectEntityEvent;
 import org.spongepowered.api.event.entity.BreedEntityEvent;
@@ -1283,23 +1283,77 @@ public class SpongeEventFactory {
     /**
      * AUTOMATICALLY GENERATED, DO NOT EDIT.
      * Creates a new instance of
-     * {@link org.spongepowered.api.event.command.TabCompleteCommandEvent}.
+     * {@link org.spongepowered.api.event.command.TabCompleteEvent}.
      * 
      * @param game The game
      * @param cause The cause
-     * @param arguments The arguments
-     * @param command The command
+     * @param originalTabCompletions The original tab completions
      * @param tabCompletions The tab completions
-     * @return A new tab complete command event
+     * @param rawMessage The raw message
+     * @param targetLocation The target location
+     * @return A new tab complete event
      */
-    public static TabCompleteCommandEvent createTabCompleteCommandEvent(Game game, Cause cause, String arguments, String command, List<String> tabCompletions) {
+    public static TabCompleteEvent createTabCompleteEvent(Game game, Cause cause, List<String> originalTabCompletions, List<String> tabCompletions, String rawMessage, Optional<Location<World>> targetLocation) {
         Map<String, Object> values = Maps.newHashMap();
         values.put("game", game);
         values.put("cause", cause);
+        values.put("originalTabCompletions", originalTabCompletions);
+        values.put("tabCompletions", tabCompletions);
+        values.put("rawMessage", rawMessage);
+        values.put("targetLocation", targetLocation);
+        return SpongeEventFactoryUtils.createEventImpl(TabCompleteEvent.class, values);
+    }
+
+    /**
+     * AUTOMATICALLY GENERATED, DO NOT EDIT.
+     * Creates a new instance of
+     * {@link org.spongepowered.api.event.command.TabCompleteEvent.Chat}.
+     * 
+     * @param game The game
+     * @param cause The cause
+     * @param originalTabCompletions The original tab completions
+     * @param tabCompletions The tab completions
+     * @param rawMessage The raw message
+     * @param targetLocation The target location
+     * @return A new chat tab complete event
+     */
+    public static TabCompleteEvent.Chat createTabCompleteEventChat(Game game, Cause cause, List<String> originalTabCompletions, List<String> tabCompletions, String rawMessage, Optional<Location<World>> targetLocation) {
+        Map<String, Object> values = Maps.newHashMap();
+        values.put("game", game);
+        values.put("cause", cause);
+        values.put("originalTabCompletions", originalTabCompletions);
+        values.put("tabCompletions", tabCompletions);
+        values.put("rawMessage", rawMessage);
+        values.put("targetLocation", targetLocation);
+        return SpongeEventFactoryUtils.createEventImpl(TabCompleteEvent.Chat.class, values);
+    }
+
+    /**
+     * AUTOMATICALLY GENERATED, DO NOT EDIT.
+     * Creates a new instance of
+     * {@link org.spongepowered.api.event.command.TabCompleteEvent.Command}.
+     * 
+     * @param game The game
+     * @param cause The cause
+     * @param originalTabCompletions The original tab completions
+     * @param tabCompletions The tab completions
+     * @param arguments The arguments
+     * @param command The command
+     * @param rawMessage The raw message
+     * @param targetLocation The target location
+     * @return A new command tab complete event
+     */
+    public static TabCompleteEvent.Command createTabCompleteEventCommand(Game game, Cause cause, List<String> originalTabCompletions, List<String> tabCompletions, String arguments, String command, String rawMessage, Optional<Location<World>> targetLocation) {
+        Map<String, Object> values = Maps.newHashMap();
+        values.put("game", game);
+        values.put("cause", cause);
+        values.put("originalTabCompletions", originalTabCompletions);
+        values.put("tabCompletions", tabCompletions);
         values.put("arguments", arguments);
         values.put("command", command);
-        values.put("tabCompletions", tabCompletions);
-        return SpongeEventFactoryUtils.createEventImpl(TabCompleteCommandEvent.class, values);
+        values.put("rawMessage", rawMessage);
+        values.put("targetLocation", targetLocation);
+        return SpongeEventFactoryUtils.createEventImpl(TabCompleteEvent.Command.class, values);
     }
 
     /**
