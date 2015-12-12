@@ -136,6 +136,11 @@ public abstract class VariableAmount implements DataSerializable {
         return "a varying amount";
     }
 
+    @Override
+    public int getContentVersion() {
+        return 0;
+    }
+
     /**
      * Represents a fixed amount, calls to {@link #getAmount} will always return
      * the same fixed value.

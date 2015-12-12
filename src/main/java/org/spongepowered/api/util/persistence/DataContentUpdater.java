@@ -22,23 +22,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.api.data;
+package org.spongepowered.api.util.persistence;
 
-/**
- * Represents an object that can be represented by a {@link DataContainer}.
- * <p>DataContainers received from {@link DataSerializable#toContainer()}
- * should be considered to be copies of the original data, and therefor,
- * thread safe.</p>
- */
-public interface DataSerializable {
+import org.spongepowered.api.data.DataView;
+import org.spongepowered.api.util.Updater;
 
-    int getContentVersion();
-
-    /**
-     * Serializes this object into a comprehensible {@link DataContainer}.
-     *
-     * @return A newly created DataContainer
-     */
-    DataContainer toContainer();
+public interface DataContentUpdater extends Updater<DataView> {
 
 }

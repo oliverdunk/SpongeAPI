@@ -125,6 +125,11 @@ public class WeightedItem extends WeightedSerializableObject<ItemStackSnapshot> 
     }
 
     @Override
+    public int getContentVersion() {
+        return 0;
+    }
+
+    @Override
     public DataContainer toContainer() {
         return new MemoryDataContainer()
             .set(Queries.WEIGHTED_SERIALIZABLE, this.get())
