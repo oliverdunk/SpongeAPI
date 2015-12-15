@@ -56,6 +56,7 @@ import java.lang.reflect.Modifier;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -202,6 +203,8 @@ public class SpongeEventFactoryTest {
             return Cause.of(NamedCause.source("none"));
         } else if (paramType == Location.class) {
             return new Location<>(mock(Extent.class), Vector3d.ZERO);
+        } else if (paramType == Locale.class) {
+            return Locale.ROOT;
         } else {
             return mock(paramType, withSettings().defaultAnswer(Mockito.RETURNS_MOCKS));
         }
