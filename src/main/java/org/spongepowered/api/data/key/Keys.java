@@ -147,6 +147,7 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.util.Axis;
 import org.spongepowered.api.util.Color;
 import org.spongepowered.api.util.Direction;
+import org.spongepowered.api.util.Tuple;
 import org.spongepowered.api.util.rotation.Rotation;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
@@ -261,7 +262,7 @@ public final class Keys {
     public static final Key<Value<Boolean>> PLAYER_CREATED = null;
     public static final Key<Value<Boolean>> IS_PLAYING = null;
     public static final Key<Value<RabbitType>> RABBIT_TYPE = null;
-    public static final Key<MapValue<UUID, Vector3d>> RESPAWN_LOCATIONS = null;
+    public static final Key<MapValue<UUID, Tuple<Vector3d, Boolean>>> RESPAWN_LOCATIONS = null;
     public static final Key<Value<Boolean>> PIG_SADDLE = null;
     public static final Key<Value<Boolean>> IS_SCREAMING = null;
     public static final Key<Value<Boolean>> WILL_SHATTER = null;
