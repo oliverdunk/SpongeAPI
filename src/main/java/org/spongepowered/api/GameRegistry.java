@@ -35,6 +35,8 @@ import org.spongepowered.api.item.recipe.RecipeRegistry;
 import org.spongepowered.api.network.status.Favicon;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.profile.GameProfile;
+import org.spongepowered.api.registry.CatalogRegistryModule;
+import org.spongepowered.api.registry.RegistryModule;
 import org.spongepowered.api.resourcepack.ResourcePack;
 import org.spongepowered.api.scoreboard.displayslot.DisplaySlot;
 import org.spongepowered.api.statistic.BlockStatistic;
@@ -59,6 +61,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 /**
  * Provides an easy way to retrieve types from a {@link Game}.
@@ -103,6 +106,58 @@ public interface GameRegistry {
      * @return A collection of all known types of the requested catalog type
      */
     <T extends CatalogType> Collection<T> getAllOf(Class<T> typeClass);
+
+    /**
+     * Registers the {@link CatalogRegistryModule} for catalog registration and handling.
+     * By default, the only supported
+     *
+     * @param catalogClass The catalog class itself
+     * @param registryModule The registry module
+     * @param <T> The type of catalog
+     */
+    <T extends CatalogType> GameRegistry registerModule(Class<T> catalogClass, CatalogRegistryModule<T> registryModule);
+
+    /**
+     * Registers the
+     * @param module
+     * @return
+     */
+    GameRegistry registerModule(RegistryModule module);
+
+    /**
+     * Registers
+     * @param builderClass
+     * @param supplier
+     * @param <T>
+     * @return
+     */
+    <T> GameRegistry registerBuilderSupplier(Class<T> builderClass, Supplier<? extends T> supplier);
+
+    /**
+     *
+     * @param catalogClass
+     * @param <T>
+     * @return
+     */
+    <T extends CatalogType> CatalogRegistryModule<T> getRegistryModuleFor(Class<T> catalogClass);
+
+    /**
+     *
+     * @param catalogClass
+     * @param extra
+     * @param <T>
+     */
+    <T extends CatalogType> void registerAdditionalType(Class<T> catalogClass, T extra);
+
+    /**
+     *
+     * @param clazz
+     * @param catalogType
+     * @param <TUnknown>
+     * @param <T>
+     * @return
+     */
+    <TUnknown, T extends CatalogType> boolean isAdditionalRegistered(Class<TUnknown> clazz, Class<T> catalogType);
 
     /**
      * Gets a builder of the desired class type, examples may include:
