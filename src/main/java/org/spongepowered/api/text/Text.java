@@ -700,6 +700,7 @@ public abstract class Text implements TextRepresentable {
         HoverAction<?> hoverAction = null;
         ClickAction<?> clickAction = null;
         ShiftClickAction<?> shiftClickAction = null;
+        boolean changedFormat = false;
 
         if (objects.length == 1 && objects[0] instanceof TextRepresentable) {
             return ((TextRepresentable) objects[0]).toText();
@@ -707,14 +708,19 @@ public abstract class Text implements TextRepresentable {
 
         for (Object obj : objects) {
             if (obj instanceof TextFormat) {
+                changedFormat = true;
                 format = (TextFormat) obj;
             } else if (obj instanceof TextColor) {
+                changedFormat = true;
                 format = format.color((TextColor) obj);
             } else if (obj instanceof TextStyle) {
+                changedFormat = true;
                 format = format.style(obj.equals(TextStyles.RESET) ? TextStyles.NONE : format.getStyle().and((TextStyle) obj));
             } else if (obj instanceof TextRepresentable) {
+                changedFormat = true;
                 builder.append(((TextRepresentable) obj).toText());
             } else if (obj instanceof TextAction) {
+                changedFormat = true;
                 if (obj instanceof HoverAction) {
                     hoverAction = (HoverAction<?>) obj;
                 } else if (obj instanceof ClickAction) {
@@ -725,6 +731,7 @@ public abstract class Text implements TextRepresentable {
                     // Unsupported TextAction
                 }
             } else {
+                changedFormat = false;
                 Text.Builder childBuilder;
 
                 if (obj instanceof String) {
@@ -751,6 +758,22 @@ public abstract class Text implements TextRepresentable {
 
                 builder.append(childBuilder.format(format).build());
             }
+        }
+
+        if (changedFormat) {
+            // Did the formatting change without being applied to something?
+            // Then just append an empty text with that formatting
+            final Text.Builder childBuilder = builder();
+            if (hoverAction != null) {
+                childBuilder.onHover(hoverAction);
+            }
+            if (clickAction != null) {
+                childBuilder.onClick(clickAction);
+            }
+            if (shiftClickAction != null) {
+                childBuilder.onShiftClick(shiftClickAction);
+            }
+            builder.append(childBuilder.format(format).build());
         }
 
         if (builder.children.size() == 1) {
