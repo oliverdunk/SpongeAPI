@@ -24,26 +24,9 @@
  */
 package org.spongepowered.api.config;
 
-import com.google.inject.BindingAnnotation;
-import com.google.inject.Inject;
+import org.spongepowered.api.CatalogType;
+import org.spongepowered.api.util.annotation.CatalogedBy;
 
-import java.io.File;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.nio.file.Path;
+public interface ConfigContext<T> extends CatalogType {
 
-/**
- * Provides an convenient injection for {@link ConfigRoot#getDirectory()}.
- *
- * <p>Use this annotation on a {@link File} or {@link Path}. Remember that
- * {@link Inject} is also necessary.</p>
- *
- * @see ConfigManager For getting configuration without injection
- */
-@BindingAnnotation
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.PARAMETER, ElementType.FIELD})
-public @interface ConfigDir {
 }

@@ -24,6 +24,10 @@
  */
 package org.spongepowered.api.config;
 
+import com.typesafe.config.ConfigValueType;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.world.World;
+
 /**
  * Provides configuration for plugins.
  *
@@ -41,27 +45,10 @@ package org.spongepowered.api.config;
  * scenarios. It is not required that plugins use this, but it does ensure
  * consistency.</p>
  *
- * <p>Call either {@link #getSharedConfig(Object)} or
- * {@link #getPluginConfig(Object)} to get an object that represents one of
- * the two outlined choices.</p>
+ * <p>Call {@link #getPluginConfig(Object)} to get an object that
+ * represents one of the two outlined choices.</p>
  */
 public interface ConfigManager {
-
-    /**
-     * Get the configuration root for a plugin that utilizes the shared
-     * configuration folder.
-     *
-     * <p>The shared configuration folder <em>may</em> refer to
-     * "config/" but this may vary between implementations and
-     * configurations.</p>
-     *
-     * <p>The plugin parameter is used to determine the filename for
-     * {@link ConfigRoot#getConfigPath()}.</p>
-     *
-     * @param instance The plugin instance
-     * @return A shared configuration root
-     */
-    ConfigRoot getSharedConfig(Object instance);
 
     /**
      * Get the configuration root for a plugin that utilizes a configuration
@@ -75,4 +62,11 @@ public interface ConfigManager {
      */
     ConfigRoot getPluginConfig(Object instance);
 
+    <T> ConfigRoot getExactConfigFor(Object plugin, ConfigContext<T> configContext, T context);
+
+    default ConfigRoot getGlobalConfigFor(Object plugin) {
+        return getExactConfigFor(plugin, ConfigContexts.GLOBAL, Sponge.getGame());
+    }
+
+    <T> ConfigRoot getActiveConfigFor(Object plugin, ConfigContext<T> configContext, T context);
 }

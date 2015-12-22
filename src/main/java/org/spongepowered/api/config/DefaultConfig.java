@@ -50,14 +50,4 @@ import java.nio.file.Path;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 public @interface DefaultConfig {
-
-    /**
-     * Whether the the shared root for configuration should be used.
-     *
-     * @see ConfigRoot#getConfigPath() For information on what the shared root is
-     *
-     * @return True to use a shared root configuration
-     */
-    boolean sharedRoot();
-
 }
