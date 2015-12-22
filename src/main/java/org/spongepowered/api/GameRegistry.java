@@ -45,6 +45,7 @@ import org.spongepowered.api.statistic.StatisticGroup;
 import org.spongepowered.api.statistic.TeamStatistic;
 import org.spongepowered.api.text.TextFactory;
 import org.spongepowered.api.text.format.TextColor;
+import org.spongepowered.api.text.selector.SelectorFactory;
 import org.spongepowered.api.text.translation.Translation;
 import org.spongepowered.api.util.ResettableBuilder;
 import org.spongepowered.api.util.rotation.Rotation;
@@ -317,6 +318,13 @@ public interface GameRegistry {
      * @return The text factory
      */
     TextFactory getTextFactory();
+
+    /**
+     * Gets the internal {@link SelectorFactory}.
+     *
+     * @return The selector factory
+     */
+    SelectorFactory getSelectorFactory();
 
     Locale getLocale(String locale);
 

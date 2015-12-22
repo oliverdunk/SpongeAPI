@@ -24,6 +24,8 @@
  */
 package org.spongepowered.api.text.selector;
 
+import org.spongepowered.api.Sponge;
+
 import java.util.Set;
 
 /**
@@ -32,6 +34,10 @@ import java.util.Set;
 public final class Arguments {
 
     private Arguments() {
+    }
+
+    static SelectorFactory getFactory() {
+        return Sponge.getRegistry().getSelectorFactory();
     }
 
     /**
@@ -45,7 +51,7 @@ public final class Arguments {
      * @return The created argument
      */
     public static <T> Argument<T> create(ArgumentType<T> type, T value) {
-        return Selectors.factory.createArgument(type, value);
+        return getFactory().createArgument(type, value);
     }
 
     /**
@@ -60,7 +66,7 @@ public final class Arguments {
      * @return The created invertible argument
      */
     public static <T> Argument.Invertible<T> create(ArgumentType.Invertible<T> type, T value, boolean inverted) {
-        return Selectors.factory.createArgument(type, value, inverted);
+        return getFactory().createArgument(type, value, inverted);
     }
 
     /**
@@ -73,7 +79,7 @@ public final class Arguments {
      * @return The created argument
      */
     public static <T, V> Set<Argument<T>> createSet(ArgumentHolder<? extends ArgumentType<T>> type, V value) {
-        return Selectors.factory.createArguments(type, value);
+        return getFactory().createArguments(type, value);
     }
 
     /**
@@ -87,7 +93,7 @@ public final class Arguments {
      *         due to invalid format)
      */
     public static Argument<?> parse(String argument) throws IllegalArgumentException {
-        return Selectors.factory.parseArgument(argument);
+        return getFactory().parseArgument(argument);
     }
 
 }

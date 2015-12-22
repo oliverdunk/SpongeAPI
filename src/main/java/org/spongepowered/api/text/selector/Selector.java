@@ -24,6 +24,8 @@
  */
 package org.spongepowered.api.text.selector;
 
+import static org.spongepowered.api.text.selector.Arguments.getFactory;
+
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.world.Location;
@@ -218,5 +220,26 @@ public interface Selector {
      * @return A new selector builder with the content of this selector
      */
     SelectorBuilder builder();
+
+    /**
+     * Creates a {@link SelectorBuilder} with the specified type and no
+     * arguments.
+     *
+     * @param type The type of the selector
+     * @return A new selector builder with the specified type
+     */
+    static SelectorBuilder builder(SelectorType type) {
+        return getFactory().createBuilder(type);
+    }
+
+    /**
+     * Parses a {@link Selector} from the given selector string.
+     *
+     * @param selector The raw selector string
+     * @return A new selector containing the given selector data
+     */
+    static Selector parse(String selector) {
+        return getFactory().parseRawSelector(selector);
+    }
 
 }
