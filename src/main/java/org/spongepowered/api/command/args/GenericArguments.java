@@ -39,7 +39,6 @@ import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.source.LocatedSource;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.util.GuavaCollectors;
 import org.spongepowered.api.util.StartsWithPredicate;
 import org.spongepowered.api.world.DimensionType;
@@ -162,7 +161,7 @@ public final class GenericArguments {
 
     static class MarkTrueCommandElement extends CommandElement {
         public MarkTrueCommandElement(String flag) {
-            super(Texts.of(flag));
+            super(Text.of(flag));
         }
 
         @Override
@@ -248,7 +247,7 @@ public final class GenericArguments {
 
         @Override
         public Text getUsage(CommandSource commander) {
-            final TextBuilder build = Texts.builder();
+            final Text.Builder build = Text.builder();
             for (Iterator<CommandElement> it = this.elements.iterator(); it.hasNext();) {
                 build.append(it.next().getUsage(commander));
                 if (it.hasNext()) {
@@ -313,10 +312,10 @@ public final class GenericArguments {
         @Override
         public Text getUsage(CommandSource commander) {
             if (this.choicesInUsage) {
-                final TextBuilder build = Texts.builder();
+                final Text.Builder build = Text.builder();
                 build.append(CommandMessageFormatting.LT_TEXT);
                 for (Iterator<String> it = this.choices.keySet().iterator(); it.hasNext();) {
-                    build.append(Texts.of(it.next()));
+                    build.append(Text.of(it.next()));
                     if (it.hasNext()) {
                         build.append(CommandMessageFormatting.PIPE_TEXT);
                     }
@@ -393,7 +392,7 @@ public final class GenericArguments {
 
         @Override
         public Text getUsage(CommandSource commander) {
-            final TextBuilder ret = Texts.builder();
+            final Text.Builder ret = Text.builder();
             for (Iterator<CommandElement> it = this.elements.iterator(); it.hasNext();) {
                 ret.append(it.next().getUsage(commander));
                 if (it.hasNext()) {
@@ -474,7 +473,7 @@ public final class GenericArguments {
         public void parse(CommandSource source, CommandArgs args, CommandContext context) throws ArgumentParseException {
             if (!args.hasNext()) {
                 if (this.element.getKey() != null && this.value != null) {
-                    context.putArg(Texts.toPlain(this.element.getKey()), this.value);
+                    context.putArg(Text.toPlain(this.element.getKey()), this.value);
                 }
                 return;
             }
@@ -505,7 +504,7 @@ public final class GenericArguments {
 
         @Override
         public Text getUsage(CommandSource src) {
-            return Texts.of("[", this.element.getUsage(src), "]");
+            return Text.of("[", this.element.getUsage(src), "]");
         }
     }
 
@@ -560,7 +559,7 @@ public final class GenericArguments {
 
         @Override
         public Text getUsage(CommandSource src) {
-            return Texts.of(this.times, '*', this.element.getUsage(src));
+            return Text.of(this.times, '*', this.element.getUsage(src));
         }
     }
 
@@ -612,7 +611,7 @@ public final class GenericArguments {
 
         @Override
         public Text getUsage(CommandSource context) {
-            return Texts.of(this.element.getUsage(context), CommandMessageFormatting.PLUS_TEXT);
+            return Text.of(this.element.getUsage(context), CommandMessageFormatting.PLUS_TEXT);
         }
     }
 
@@ -799,7 +798,7 @@ public final class GenericArguments {
 
         @Override
         public Text getUsage(CommandSource src) {
-            return Texts.of(CommandMessageFormatting.LT_TEXT, getKey(), CommandMessageFormatting.ELIPSES_TEXT, CommandMessageFormatting.GT_TEXT);
+            return Text.of(CommandMessageFormatting.LT_TEXT, getKey(), CommandMessageFormatting.ELIPSES_TEXT, CommandMessageFormatting.GT_TEXT);
         }
     }
 
@@ -872,7 +871,7 @@ public final class GenericArguments {
 
         @Override
         public Text getUsage(CommandSource src) {
-            return Texts.of(Joiner.on(' ').join(this.expectedArgs));
+            return Text.of(Joiner.on(' ').join(this.expectedArgs));
         }
     }
 
@@ -930,7 +929,7 @@ public final class GenericArguments {
 
         @Override
         public Text getUsage(CommandSource src) {
-            return src instanceof Player && this.returnSource ? Texts.of("[", super.getUsage(src), "]") : super.getUsage(src);
+            return src instanceof Player && this.returnSource ? Text.of("[", super.getUsage(src), "]") : super.getUsage(src);
         }
     }
 

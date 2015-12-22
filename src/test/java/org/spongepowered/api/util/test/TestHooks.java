@@ -24,7 +24,7 @@
  */
 package org.spongepowered.api.util.test;
 
-import org.spongepowered.api.text.Texts;
+import org.spongepowered.api.text.Text;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -38,7 +38,7 @@ public class TestHooks {
     public static void initialize()  {
         if (INITIALIZED.compareAndSet(false, true)) {
             try {
-                Field textField = Texts.class.getDeclaredField("factory");
+                Field textField = Text.class.getDeclaredField("factory");
                 textField.setAccessible(true);
                 textField.set(null, new TestTextFactory());
             } catch (Exception e) {

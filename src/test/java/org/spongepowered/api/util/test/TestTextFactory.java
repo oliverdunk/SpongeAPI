@@ -24,9 +24,14 @@
  */
 package org.spongepowered.api.util.test;
 
+import org.spongepowered.api.text.LiteralText;
+import org.spongepowered.api.text.ScoreText;
+import org.spongepowered.api.text.SelectorText;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.TextFactory;
 import org.spongepowered.api.text.TextRepresentation;
+import org.spongepowered.api.text.TranslatableText;
+import org.spongepowered.api.text.translation.Translatable;
 
 import java.util.List;
 import java.util.Locale;
@@ -45,14 +50,14 @@ public class TestTextFactory implements TextFactory {
     public String toPlain(Text text, Locale locale) {
         final StringBuilder ret = new StringBuilder();
         for (Text child : text.withChildren()) {
-            if (child instanceof Text.Literal) {
-                ret.append(((Text.Literal) child).getContent());
-            } else if (child instanceof Text.Translatable) {
-                ret.append(((Text.Translatable) child).getTranslation().get(locale, convertArgs(((Text.Translatable) child).getArguments(), locale)));
-            } else if (child instanceof  Text.Score) {
-                ret.append(((Text.Score) child).getScore().getScore());
-            } else if (child instanceof Text.Selector) {
-                ret.append(((Text.Selector) child).getSelector().toPlain());
+            if (child instanceof LiteralText) {
+                ret.append(((LiteralText) child).getContent());
+            } else if (child instanceof TranslatableText) {
+                ret.append(((TranslatableText) child).getTranslation().get(locale, convertArgs(((TranslatableText) child).getArguments(), locale)));
+            } else if (child instanceof ScoreText) {
+                ret.append(((ScoreText) child).getScore().getScore());
+            } else if (child instanceof SelectorText) {
+                ret.append(((SelectorText) child).getSelector().toPlain());
             }
         }
         return ret.toString();

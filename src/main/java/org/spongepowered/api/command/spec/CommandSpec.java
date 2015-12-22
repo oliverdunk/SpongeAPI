@@ -32,7 +32,6 @@ import static org.spongepowered.api.command.args.GenericArguments.optional;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.command.CommandCallable;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandMessageFormatting;
@@ -375,7 +374,7 @@ public final class CommandSpec implements CommandCallable {
     @Override
     public Optional<Text> getHelp(CommandSource source) {
         checkNotNull(source, "source");
-        TextBuilder builder = Texts.builder();
+        Text.Builder builder = Text.builder();
         Optional<Text> desc = getShortDescription(source);
         if (desc.isPresent()) {
             builder.append(desc.get(), CommandMessageFormatting.NEWLINE_TEXT);

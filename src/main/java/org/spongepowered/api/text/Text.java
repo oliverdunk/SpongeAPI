@@ -30,12 +30,18 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import org.spongepowered.api.scoreboard.Score;
 import org.spongepowered.api.text.action.ClickAction;
 import org.spongepowered.api.text.action.HoverAction;
 import org.spongepowered.api.text.action.ShiftClickAction;
+import org.spongepowered.api.text.action.TextAction;
 import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextFormat;
 import org.spongepowered.api.text.format.TextStyle;
+import org.spongepowered.api.text.format.TextStyles;
+import org.spongepowered.api.text.selector.Selector;
+import org.spongepowered.api.text.translation.Translatable;
+import org.spongepowered.api.text.translation.Translation;
 import org.spongepowered.api.text.translation.locale.NamedLocales;
 
 import java.util.Collections;
@@ -57,9 +63,9 @@ import javax.annotation.Nullable;
  *
  * <p>Text instances can be either directly created through the available
  * constructor or using the {@link Builder} available through one of the
- * {@link Texts#builder()} methods, which is the recommended way.</p>
+ * {@link Text#builder()} methods, which is the recommended way.</p>
  *
- * @see Texts#builder()
+ * @see Text#builder()
  * @see Builder
  * @see LiteralText
  * @see TranslatableText
@@ -67,6 +73,9 @@ import javax.annotation.Nullable;
  * @see ScoreText
  */
 public abstract class Text implements TextRepresentable {
+
+    public static final Text EMPTY = LiteralText.EMPTY;
+    private static TextFactory factory = null;
 
     /**
      * The default locale used for texts when the receiver's {@link Locale} is
@@ -202,6 +211,8 @@ public abstract class Text implements TextRepresentable {
      * @return A new message builder with the content of this text
      */
     public abstract Builder toBuilder();
+
+
 
     @Override
     public boolean equals(@Nullable Object o) {
@@ -576,6 +587,489 @@ public abstract class Text implements TextRepresentable {
             return build();
         }
 
+    }
+
+    /**
+     * Returns an empty, unformatted {@link Text} instance.
+     *
+     * @return An empty text
+     */
+    public static Text of() {
+        return EMPTY;
+    }
+
+    /**
+     * Creates a {@link Text} with the specified plain text. The created message
+     * won't have any formatting or events configured.
+     *
+     * @param content The content of the text
+     * @return The created text
+     * @see LiteralText
+     */
+    public static LiteralText of(String content) {
+        if (checkNotNull(content, "content").isEmpty()) {
+            return LiteralText.EMPTY;
+        }
+        return new LiteralText(content);
+    }
+
+    /**
+     * Creates a new unformatted {@link TranslatableText} with the given
+     * {@link Translation} and arguments.
+     *
+     * @param translation The translation for the text
+     * @param args The arguments for the translation
+     * @return The created text
+     * @see TranslatableText
+     */
+    public static TranslatableText of(Translation translation, Object... args) {
+        return new TranslatableText(translation, ImmutableList.copyOf(checkNotNull(args, "args")));
+    }
+
+    /**
+     * Creates a new unformatted {@link TranslatableText} from the given
+     * {@link Translatable}.
+     *
+     * @param translatable The translatable for the text
+     * @param args The arguments for the translation
+     * @return The created text
+     * @see TranslatableText
+     */
+    public static TranslatableText of(Translatable translatable, Object... args) {
+        return of(checkNotNull(translatable, "translatable").getTranslation(), args);
+    }
+
+    /**
+     * Creates a new unformatted {@link SelectorText} with the given selector.
+     *
+     * @param selector The selector for the text
+     * @return The created text
+     * @see SelectorText
+     */
+    public static SelectorText of(Selector selector) {
+        return new SelectorText(selector);
+    }
+
+    /**
+     * Creates a new unformatted {@link ScoreText} with the given score.
+     *
+     * @param score The score for the text
+     * @return The created text
+     * @see ScoreText
+     */
+    public static ScoreText of(Score score) {
+        return new ScoreText(score);
+    }
+
+    /**
+     * Builds a {@link Text} from a given array of objects.
+     *
+     * <p>For instance, you can use this like
+     * <code>Texts.of(TextColors.DARK_AQUA, "Hi", TextColors.AQUA, "Bye")</code>
+     * </p>
+     *
+     * <p>This will create the correct {@link Text} instance if the input object
+     * is the input for one of the {@link Text} types or convert the object to a
+     * string otherwise.</p>
+     *
+     * @param objects The object array
+     * @return The built text object
+     */
+    public static Text of(Object... objects) {
+        Text.Builder builder = builder();
+        TextFormat format = new TextFormat();
+        HoverAction<?> hoverAction = null;
+        ClickAction<?> clickAction = null;
+        ShiftClickAction<?> shiftClickAction = null;
+
+        if (objects.length == 1 && objects[0] instanceof TextRepresentable) {
+            return ((TextRepresentable) objects[0]).toText();
+        }
+
+        for (Object obj : objects) {
+            if (obj instanceof TextFormat) {
+                format = (TextFormat) obj;
+            } else if (obj instanceof TextColor) {
+                format = format.color((TextColor) obj);
+            } else if (obj instanceof TextStyle) {
+                format = format.style(obj.equals(TextStyles.RESET) ? TextStyles.NONE : format.getStyle().and((TextStyle) obj));
+            } else if (obj instanceof TextRepresentable) {
+                builder.append(((TextRepresentable) obj).toText());
+            } else if (obj instanceof TextAction) {
+                if (obj instanceof HoverAction) {
+                    hoverAction = (HoverAction<?>) obj;
+                } else if (obj instanceof ClickAction) {
+                    clickAction = (ClickAction<?>) obj;
+                } else if (obj instanceof ShiftClickAction) {
+                    shiftClickAction = (ShiftClickAction<?>) obj;
+                } else {
+                    // Unsupported TextAction
+                }
+            } else {
+                Text.Builder childBuilder;
+
+                if (obj instanceof String) {
+                    childBuilder = builder((String) obj);
+                } else if (obj instanceof Translation) {
+                    childBuilder = builder((Translation) obj);
+                } else if (obj instanceof Selector) {
+                    childBuilder = builder((Selector) obj);
+                } else if (obj instanceof Score) {
+                    childBuilder = builder((Score) obj);
+                } else {
+                    childBuilder = builder(String.valueOf(obj));
+                }
+
+                if (hoverAction != null) {
+                    childBuilder.onHover(hoverAction);
+                }
+                if (clickAction != null) {
+                    childBuilder.onClick(clickAction);
+                }
+                if (shiftClickAction != null) {
+                    childBuilder.onShiftClick(shiftClickAction);
+                }
+
+                builder.append(childBuilder.format(format).build());
+            }
+        }
+
+        if (builder.children.size() == 1) {
+            // Single content, reduce Text depth
+            return builder.children.get(0);
+        }
+
+        return builder.build();
+    }
+
+    /**
+     * Creates a {@link Text.Builder} with empty text.
+     *
+     * @return A new text builder with empty text
+     */
+    public static Text.Builder builder() {
+        return new LiteralText.Builder();
+    }
+
+    /**
+     * Creates a new unformatted {@link LiteralText.Builder} with the specified
+     * content.
+     *
+     * @param content The content of the text
+     * @return The created text builder
+     * @see LiteralText
+     * @see LiteralText.Builder
+     */
+    public static LiteralText.Builder builder(String content) {
+        return new LiteralText.Builder(content);
+    }
+
+    /**
+     * Creates a new {@link LiteralText.Builder} with the formatting and actions
+     * of the specified {@link Text} and the given content.
+     *
+     * @param text The text to apply the properties from
+     * @param content The content for the text builder
+     * @return The created text builder
+     * @see LiteralText
+     * @see LiteralText.Builder
+     */
+    public static LiteralText.Builder builder(Text text, String content) {
+        return new LiteralText.Builder(text, content);
+    }
+
+    /**
+     * Creates a new unformatted {@link TranslatableText.Builder} with the given
+     * {@link Translation} and arguments.
+     *
+     * @param translation The translation for the builder
+     * @param args The arguments for the translation
+     * @return The created text builder
+     * @see TranslatableText
+     * @see TranslatableText.Builder
+     */
+    public static TranslatableText.Builder builder(Translation translation, Object... args) {
+        return new TranslatableText.Builder(translation, args);
+    }
+
+    /**
+     * Creates a new unformatted {@link TranslatableText.Builder} from the given
+     * {@link Translatable}.
+     *
+     * @param translatable The translatable for the builder
+     * @param args The arguments for the translation
+     * @return The created text builder
+     * @see TranslatableText
+     * @see TranslatableText.Builder
+     */
+    public static TranslatableText.Builder builder(Translatable translatable, Object... args) {
+        return new TranslatableText.Builder(translatable, args);
+    }
+
+    /**
+     * Creates a new {@link TranslatableText.Builder} with the formatting and
+     * actions of the specified {@link Text} and the given {@link Translation}
+     * and arguments.
+     *
+     * @param text The text to apply the properties from
+     * @param translation The translation for the builder
+     * @param args The arguments for the translation
+     * @return The created text builder
+     * @see TranslatableText
+     * @see TranslatableText.Builder
+     */
+    public static TranslatableText.Builder builder(Text text, Translation translation, Object... args) {
+        return new TranslatableText.Builder(text, translation, args);
+    }
+
+    /**
+     * Creates a new {@link TranslatableText.Builder} with the formatting and
+     * actions of the specified {@link Text} and the given {@link Translatable}.
+     *
+     * @param text The text to apply the properties from
+     * @param translatable The translatable for the builder
+     * @param args The arguments for the translation
+     * @return The created text builder
+     * @see TranslatableText
+     * @see TranslatableText.Builder
+     */
+    public static TranslatableText.Builder builder(Text text, Translatable translatable, Object... args) {
+        return new TranslatableText.Builder(text, translatable, args);
+    }
+
+    /**
+     * Creates a new unformatted {@link SelectorText.Builder} with the given
+     * selector.
+     *
+     * @param selector The selector for the builder
+     * @return The created text builder
+     * @see SelectorText
+     * @see SelectorText.Builder
+     */
+    public static SelectorText.Builder builder(Selector selector) {
+        return new SelectorText.Builder(selector);
+    }
+
+    /**
+     * Creates a new {@link SelectorText.Builder} with the formatting and
+     * actions of the specified {@link Text} and the given selector.
+     *
+     * @param text The text to apply the properties from
+     * @param selector The selector for the builder
+     * @return The created text builder
+     * @see SelectorText
+     * @see SelectorText.Builder
+     */
+    public static SelectorText.Builder builder(Text text, Selector selector) {
+        return new SelectorText.Builder(text, selector);
+    }
+
+    /**
+     * Creates a new unformatted {@link ScoreText.Builder} with the given score.
+     *
+     * @param score The score for the text builder
+     * @return The created text builder
+     * @see ScoreText
+     * @see ScoreText.Builder
+     */
+    public static ScoreText.Builder builder(Score score) {
+        return new ScoreText.Builder(score);
+    }
+
+    /**
+     * Creates a new {@link ScoreText.Builder} with the formatting and actions
+     * of the specified {@link Text} and the given score.
+     *
+     * @param text The text to apply the properties from
+     * @param score The score for the text builder
+     * @return The created text builder
+     * @see ScoreText
+     * @see ScoreText.Builder
+     */
+    public static ScoreText.Builder builder(Text text, Score score) {
+        return new ScoreText.Builder(text, score);
+    }
+
+    /**
+     * Joins a sequence of text objects together.
+     *
+     * @param texts The texts to join
+     * @return A text object that joins the given text objects
+     */
+    public static Text join(Text... texts) {
+        return builder().append(texts).build();
+    }
+
+    /**
+     * Joins a sequence of text objects together.
+     *
+     * @param texts The texts to join
+     * @return A text object that joins the given text objects
+     */
+    public static Text join(Iterable<? extends Text> texts) {
+        return builder().append(texts).build();
+    }
+
+    /**
+     * Joins a sequence of text objects together along with a separator.
+     *
+     * @param separator The separator
+     * @param texts The text to join
+     * @return A text object that joins the given text objects
+     */
+    public static Text join(Text separator, Text... texts) {
+        switch (texts.length) {
+            case 0:
+                return of();
+            case 1:
+                return texts[0];
+            default:
+                Text.Builder builder = builder();
+                boolean appendSeparator = false;
+                for (Text text : texts) {
+                    if (appendSeparator) {
+                        builder.append(separator);
+                    } else {
+                        appendSeparator = true;
+                    }
+
+                    builder.append(text);
+                }
+
+                return builder.build();
+        }
+    }
+
+    /**
+     * Returns a plain text representation of the {@link Text} without any
+     * formatting.
+     *
+     * @param text The text to convert
+     * @return The text converted to plain text
+     */
+    public static String toPlain(Text text) {
+        return factory.toPlain(text);
+    }
+
+    /**
+     * Returns a plain text representation of the {@link Text} without any
+     * formatting.
+     *
+     * @param text The text to convert
+     * @param locale The locale to translate
+     * @return The text converted to plain text
+     */
+    public static String toPlain(Text text, Locale locale) {
+        return factory.toPlain(text, locale);
+    }
+
+    /**
+     * Get a {@link TextRepresentation} for the Mojangson representation of a
+     * {@link Text} object.
+     *
+     *
+     * @return The json serializer
+     */
+    public static TextRepresentation json() {
+        return factory.json();
+    }
+
+    /**
+     * Get a {@link TextRepresentation} for the TextXML representation of a
+     * {@link Text} object.
+     *
+     * @return The xml text serializer
+     */
+    public static TextRepresentation xml() {
+        return factory.xml();
+    }
+
+    /**
+     * Returns the default legacy formatting character.
+     *
+     * @return The legacy formatting character
+     * @deprecated Legacy formatting codes are being phased out of Minecraft
+     */
+    @Deprecated
+    public static char getLegacyChar() {
+        return factory.getLegacyChar();
+    }
+
+    /**
+     * Return a representation that accepts and outputs legacy color codes,
+     * using the default legacy char {{@link #getLegacyChar()} .
+     *
+     * @return The appropriate legacy representation handler
+     */
+    @Deprecated
+    public static TextRepresentation legacy() {
+        return legacy(getLegacyChar());
+    }
+
+    /**
+     * Return a representation that accepts and outputs legacy color codes,
+     * using the provided legacy character.
+     *
+     * @param legacyChar The legacy character to parse and output using
+     * @return The appropriate legacy representation handler
+     */
+    @Deprecated
+    public static TextRepresentation legacy(char legacyChar) {
+        return factory.legacy(legacyChar);
+    }
+
+    /**
+     * Removes the legacy formatting character from a legacy string.
+     *
+     * @param text The legacy text as a String
+     * @return The stripped text
+     * @deprecated Legacy formatting codes are being phased out of Minecraft
+     */
+    @Deprecated
+    public static String stripCodes(String text) {
+        return stripCodes(text, getLegacyChar());
+    }
+
+    /**
+     * Removes the legacy formatting character from a legacy string.
+     *
+     * @param text The legacy text as a String
+     * @param color The color character to be replaced
+     * @return The stripped text
+     * @deprecated Legacy formatting codes are being phased out of Minecraft
+     */
+    @Deprecated
+    public static String stripCodes(String text, char color) {
+        return factory.stripLegacyCodes(text, color);
+    }
+
+    /**
+     * Replaces the given formatting character with the default legacy
+     * formatting character from a legacy string.
+     *
+     * @param text The legacy text as a String
+     * @param from The color character to be replaced
+     * @return The replaced text
+     * @deprecated Legacy formatting codes are being phased out of Minecraft
+     */
+    @Deprecated
+    public static String replaceCodes(String text, char from) {
+        return replaceCodes(text, from, getLegacyChar());
+    }
+
+    /**
+     * Replaces the given formatting character with another given formatting
+     * character from a legacy string.
+     *
+     * @param text The legacy text as a String
+     * @param from The color character to be replaced
+     * @param to The color character to replace with
+     * @return The replaced text
+     * @deprecated Legacy formatting codes are being phased out of Minecraft
+     */
+    @Deprecated
+    public static String replaceCodes(String text, char from, char to) {
+        return factory.replaceLegacyCodes(text, from, to);
     }
 
 }

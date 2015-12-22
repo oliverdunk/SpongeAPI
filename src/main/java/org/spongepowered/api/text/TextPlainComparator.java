@@ -28,7 +28,7 @@ import java.util.Comparator;
 
 /**
  * Represents a comparator for {@link Text} that works based on the plain version of that text,
- * or the best string representation that text can have using {@link Texts#toPlain(Text)}. Once
+ * or the best string representation that text can have using {@link Text#toPlain(Text)}. Once
  * that conversion is made, the order is essentially lexicographic order with strings.
  */
 public class TextPlainComparator implements Comparator<Text> {
@@ -40,7 +40,7 @@ public class TextPlainComparator implements Comparator<Text> {
 
     @Override
     public int compare(Text o1, Text o2) {
-        return Texts.toPlain(o1).compareTo(Texts.toPlain(o2));
+        return Text.toPlain(o1).compareTo(Text.toPlain(o2));
     }
 
     /**

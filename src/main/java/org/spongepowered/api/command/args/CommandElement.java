@@ -25,8 +25,8 @@
 package org.spongepowered.api.command.args;
 
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.command.CommandSource;
+import org.spongepowered.api.text.TranslatableText;
 
 import java.util.List;
 
@@ -68,10 +68,10 @@ public abstract class CommandElement {
             return null;
         }
 
-        if (this.key instanceof Text.TranslatableText) { // Use translation key
-            return ((Text.TranslatableText) this.key).getTranslation().getId();
+        if (this.key instanceof TranslatableText) { // Use translation key
+            return ((TranslatableText) this.key).getTranslation().getId();
         } else {
-            return Texts.toPlain(this.key);
+            return Text.toPlain(this.key);
         }
     }
 
@@ -133,6 +133,6 @@ public abstract class CommandElement {
      * @return The formatted usage
      */
     public Text getUsage(CommandSource src) {
-        return getKey() == null ? Texts.of() : Texts.of("<", getKey(), ">");
+        return getKey() == null ? Text.of() : Text.of("<", getKey(), ">");
     }
 }

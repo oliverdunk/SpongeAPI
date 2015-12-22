@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
  */
 public class LiteralText extends Text {
 
+    static final LiteralText EMPTY = new LiteralText();
+
     protected final String content;
 
     LiteralText() {
@@ -191,7 +193,7 @@ public class LiteralText extends Text {
             if (this.content.isEmpty() && this.format.getColor() == TextColors.NONE && this.format.getStyle().isEmpty()
                     && this.children.isEmpty() && this.clickAction == null && this.hoverAction == null
                     && this.shiftClickAction == null) {
-                return Texts.EMPTY;
+                return EMPTY;
             }
 
             return new LiteralText(
