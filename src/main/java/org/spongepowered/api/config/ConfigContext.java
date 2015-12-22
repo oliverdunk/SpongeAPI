@@ -27,6 +27,11 @@ package org.spongepowered.api.config;
 import org.spongepowered.api.CatalogType;
 import org.spongepowered.api.util.annotation.CatalogedBy;
 
+import java.util.Optional;
+
+@CatalogedBy(ConfigContexts.class)
 public interface ConfigContext<T> extends CatalogType {
+
+    Optional<ConfigContext<?>> getParent();
 
 }
