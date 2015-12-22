@@ -24,7 +24,7 @@
  */
 package org.spongepowered.api.text.selector;
 
-import static org.spongepowered.api.text.selector.Arguments.getFactory;
+import static org.spongepowered.api.text.selector.ArgumentTypes.getFactory;
 
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.entity.Entity;
@@ -67,6 +67,27 @@ import java.util.Set;
  *      Target selectors on the Minecraft Wiki</a>
  */
 public interface Selector {
+
+    /**
+     * Creates a {@link SelectorBuilder} with the specified type and no
+     * arguments.
+     *
+     * @param type The type of the selector
+     * @return A new selector builder with the specified type
+     */
+    static SelectorBuilder builder(SelectorType type) {
+        return getFactory().createBuilder(type);
+    }
+
+    /**
+     * Parses a {@link Selector} from the given selector string.
+     *
+     * @param selector The raw selector string
+     * @return A new selector containing the given selector data
+     */
+    static Selector parse(String selector) {
+        return getFactory().parseRawSelector(selector);
+    }
 
     /**
      * Returns the type of this {@link Selector}.
@@ -220,26 +241,5 @@ public interface Selector {
      * @return A new selector builder with the content of this selector
      */
     SelectorBuilder builder();
-
-    /**
-     * Creates a {@link SelectorBuilder} with the specified type and no
-     * arguments.
-     *
-     * @param type The type of the selector
-     * @return A new selector builder with the specified type
-     */
-    static SelectorBuilder builder(SelectorType type) {
-        return getFactory().createBuilder(type);
-    }
-
-    /**
-     * Parses a {@link Selector} from the given selector string.
-     *
-     * @param selector The raw selector string
-     * @return A new selector containing the given selector data
-     */
-    static Selector parse(String selector) {
-        return getFactory().parseRawSelector(selector);
-    }
 
 }

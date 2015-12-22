@@ -24,10 +24,9 @@
  */
 package org.spongepowered.api.text.selector;
 
-import static org.spongepowered.api.text.selector.Arguments.getFactory;
-
 import com.flowpowered.math.vector.Vector3d;
 import com.flowpowered.math.vector.Vector3i;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.api.entity.living.player.gamemode.GameMode;
 import org.spongepowered.api.scoreboard.Team;
@@ -133,6 +132,11 @@ public final class ArgumentTypes {
      * <p>In Vanilla, this is represented by the {@code type} selector key.</p>
      */
     public static final ArgumentType.Invertible<EntityType> ENTITY_TYPE = null;
+
+
+    static SelectorFactory getFactory() {
+        return Sponge.getRegistry().getSelectorFactory();
+    }
 
     /**
      * Creates a minimum and maximum {@link ArgumentType} filtering depending on
