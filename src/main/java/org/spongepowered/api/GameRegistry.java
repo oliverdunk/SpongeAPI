@@ -43,6 +43,7 @@ import org.spongepowered.api.statistic.ItemStatistic;
 import org.spongepowered.api.statistic.Statistic;
 import org.spongepowered.api.statistic.StatisticGroup;
 import org.spongepowered.api.statistic.TeamStatistic;
+import org.spongepowered.api.text.TextFactory;
 import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.translation.Translation;
 import org.spongepowered.api.util.ResettableBuilder;
@@ -309,6 +310,13 @@ public interface GameRegistry {
      * @return The value factory
      */
     ValueFactory getValueFactory();
+
+    /**
+     * Gets the internal {@link TextFactory}.
+     *
+     * @return The text factory
+     */
+    TextFactory getTextFactory();
 
     Locale getLocale(String locale);
 

@@ -30,6 +30,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.scoreboard.Score;
 import org.spongepowered.api.text.action.ClickAction;
 import org.spongepowered.api.text.action.HoverAction;
@@ -75,7 +76,6 @@ import javax.annotation.Nullable;
 public abstract class Text implements TextRepresentable {
 
     public static final Text EMPTY = LiteralText.EMPTY;
-    private static TextFactory factory = null;
 
     /**
      * The default locale used for texts when the receiver's {@link Locale} is
@@ -212,7 +212,26 @@ public abstract class Text implements TextRepresentable {
      */
     public abstract Builder toBuilder();
 
+    /**
+     * Returns a plain text representation of the {@link Text} without any
+     * formatting.
+     *
+     * @return The text converted to plain text
+     */
+    public String toPlain() {
+        return toPlain(DEFAULT_LOCALE);
+    }
 
+    /**
+     * Returns a plain text representation of the {@link Text} without any
+     * formatting.
+     *
+     * @param locale The locale to translate
+     * @return The text converted to plain text
+     */
+    public String toPlain(Locale locale) {
+        return getFactory().toPlain(this, locale);
+    }
 
     @Override
     public boolean equals(@Nullable Object o) {
@@ -940,27 +959,8 @@ public abstract class Text implements TextRepresentable {
         }
     }
 
-    /**
-     * Returns a plain text representation of the {@link Text} without any
-     * formatting.
-     *
-     * @param text The text to convert
-     * @return The text converted to plain text
-     */
-    public static String toPlain(Text text) {
-        return factory.toPlain(text);
-    }
-
-    /**
-     * Returns a plain text representation of the {@link Text} without any
-     * formatting.
-     *
-     * @param text The text to convert
-     * @param locale The locale to translate
-     * @return The text converted to plain text
-     */
-    public static String toPlain(Text text, Locale locale) {
-        return factory.toPlain(text, locale);
+    private static TextFactory getFactory() {
+        return Sponge.getRegistry().getTextFactory();
     }
 
     /**
@@ -971,7 +971,7 @@ public abstract class Text implements TextRepresentable {
      * @return The json serializer
      */
     public static TextRepresentation json() {
-        return factory.json();
+        return getFactory().json();
     }
 
     /**
@@ -981,7 +981,7 @@ public abstract class Text implements TextRepresentable {
      * @return The xml text serializer
      */
     public static TextRepresentation xml() {
-        return factory.xml();
+        return getFactory().xml();
     }
 
     /**
@@ -992,7 +992,7 @@ public abstract class Text implements TextRepresentable {
      */
     @Deprecated
     public static char getLegacyChar() {
-        return factory.getLegacyChar();
+        return getFactory().getLegacyChar();
     }
 
     /**
@@ -1015,7 +1015,7 @@ public abstract class Text implements TextRepresentable {
      */
     @Deprecated
     public static TextRepresentation legacy(char legacyChar) {
-        return factory.legacy(legacyChar);
+        return getFactory().legacy(legacyChar);
     }
 
     /**
@@ -1040,7 +1040,7 @@ public abstract class Text implements TextRepresentable {
      */
     @Deprecated
     public static String stripCodes(String text, char color) {
-        return factory.stripLegacyCodes(text, color);
+        return getFactory().stripLegacyCodes(text, color);
     }
 
     /**
@@ -1069,7 +1069,7 @@ public abstract class Text implements TextRepresentable {
      */
     @Deprecated
     public static String replaceCodes(String text, char from, char to) {
-        return factory.replaceLegacyCodes(text, from, to);
+        return getFactory().replaceLegacyCodes(text, from, to);
     }
 
 }
