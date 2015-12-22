@@ -57,6 +57,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -308,6 +309,8 @@ public interface GameRegistry {
      * @return The value factory
      */
     ValueFactory getValueFactory();
+
+    Locale getLocale(String locale);
 
     /**
      * Gets the {@link Translation} with the provided ID.

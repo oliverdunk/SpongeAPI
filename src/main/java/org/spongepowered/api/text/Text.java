@@ -37,6 +37,7 @@ import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextFormat;
 import org.spongepowered.api.text.format.TextStyle;
 import org.spongepowered.api.text.translation.Translation;
+import org.spongepowered.api.text.translation.locale.NamedLocales;
 
 import java.util.Iterator;
 import java.util.Locale;
@@ -71,7 +72,7 @@ public abstract class Text implements TextRepresentable {
      * The default locale used for texts when the receiver's {@link Locale} is
      * unknown.
      */
-    public static final Locale DEFAULT_LOCALE = Locale.US;
+    public static final Locale DEFAULT_LOCALE = NamedLocales.ENGLISH;
 
     protected final TextFormat format;
     protected final ImmutableList<Text> children;
@@ -83,14 +84,8 @@ public abstract class Text implements TextRepresentable {
      * An {@link Iterable} providing an {@link Iterator} over this {@link Text}
      * as well as all children text and their children.
      */
-    protected final Iterable<Text> childrenIterable = new Iterable<Text>() {
-
-        @Override
-        public Iterator<Text> iterator() {
-            return Text.this.children.isEmpty() ? Iterators.singletonIterator(Text.this) : new TextIterator(Text.this);
-        }
-
-    };
+    protected final Iterable<Text> childrenIterable = () ->
+            this.children.isEmpty() ? Iterators.singletonIterator(this) : new TextIterator(this);
 
     Text() {
         this(new TextFormat(), ImmutableList.<Text>of(), null, null, null);
