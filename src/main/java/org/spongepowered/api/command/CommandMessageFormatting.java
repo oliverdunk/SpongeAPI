@@ -44,7 +44,7 @@ public class CommandMessageFormatting {
      * @return The formatted error message.
      */
     public static Text error(Text error) {
-        return error.builder().color(TextColors.RED).build();
+        return error.toBuilder().color(TextColors.RED).build();
     }
 
     /**
@@ -54,7 +54,7 @@ public class CommandMessageFormatting {
      * @return The formatted debug message.
      */
     public static Text debug(Text debug) {
-        return debug.builder().color(TextColors.GRAY).build();
+        return debug.toBuilder().color(TextColors.GRAY).build();
     }
 
 }

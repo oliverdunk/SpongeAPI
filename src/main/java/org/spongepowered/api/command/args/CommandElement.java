@@ -56,7 +56,7 @@ public abstract class CommandElement {
     /**
      * Return the plain key, to be used when looking up this command element in
      * a {@link CommandContext}. If the key is a
-     * {@link Text.Translatable}, this is the
+     * {@link Text.TranslatableText}, this is the
      * translation's id. Otherwise, this is the result of
      * {@link Texts#toPlain(Text)}.
      *
@@ -68,8 +68,8 @@ public abstract class CommandElement {
             return null;
         }
 
-        if (this.key instanceof Text.Translatable) { // Use translation key
-            return ((Text.Translatable) this.key).getTranslation().getId();
+        if (this.key instanceof Text.TranslatableText) { // Use translation key
+            return ((Text.TranslatableText) this.key).getTranslation().getId();
         } else {
             return Texts.toPlain(this.key);
         }
