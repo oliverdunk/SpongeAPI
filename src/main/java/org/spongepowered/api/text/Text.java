@@ -30,7 +30,6 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
-import org.spongepowered.api.Sponge;
 import org.spongepowered.api.scoreboard.Score;
 import org.spongepowered.api.text.action.ClickAction;
 import org.spongepowered.api.text.action.HoverAction;
@@ -41,9 +40,10 @@ import org.spongepowered.api.text.format.TextFormat;
 import org.spongepowered.api.text.format.TextStyle;
 import org.spongepowered.api.text.format.TextStyles;
 import org.spongepowered.api.text.selector.Selector;
+import org.spongepowered.api.text.serializer.TextSerializer;
+import org.spongepowered.api.text.serializer.TextSerializers;
 import org.spongepowered.api.text.translation.Translatable;
 import org.spongepowered.api.text.translation.Translation;
-import org.spongepowered.api.text.translation.locale.NamedLocales;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -76,14 +76,15 @@ import javax.annotation.Nullable;
  */
 public abstract class Text implements TextRepresentable {
 
+    /**
+     * The empty, unformatted {@link Text} instance.
+     */
     public static final Text EMPTY = LiteralText.EMPTY;
 
     /**
-     * The default locale used for texts when the receiver's {@link Locale} is
-     * unknown.
+     * A {@link Comparator} for texts that compares the plain text of two text
+     * instances.
      */
-    public static final Locale DEFAULT_LOCALE = NamedLocales.ENGLISH;
-
     public static Comparator<Text> PLAIN_COMPARATOR = (text1, text2) -> text1.toPlain().compareTo(text2.toPlain());
 
     protected final TextFormat format;
@@ -216,24 +217,47 @@ public abstract class Text implements TextRepresentable {
     public abstract Builder toBuilder();
 
     /**
-     * Returns a plain text representation of the {@link Text} without any
+     * Returns a plain text representation of this {@link Text} without any
      * formatting.
      *
-     * @return The text converted to plain text
+     * @return This text converted to plain text
      */
     public final String toPlain() {
-        return toPlain(DEFAULT_LOCALE);
+        return to(TextSerializers.PLAIN);
     }
 
     /**
-     * Returns a plain text representation of the {@link Text} without any
+     * Returns a plain text representation of this {@link Text} without any
      * formatting.
      *
-     * @param locale The locale to translate
-     * @return The text converted to plain text
+     * @param locale The locale to translate with
+     * @return This text converted to plain text
      */
     public final String toPlain(Locale locale) {
-        return getFactory().toPlain(this, locale);
+        return to(TextSerializers.PLAIN, locale);
+    }
+
+    /**
+     * Serializes this {@link Text} using the specified {@link TextSerializer}.
+     *
+     * @param serializer The serializer
+     * @return The serialized text
+     * @see TextSerializer#to(Text)
+     */
+    public final String to(TextSerializer serializer) {
+        return serializer.to(this);
+    }
+
+    /**
+     * Serializes this {@link Text} using the specified {@link TextSerializer}.
+     *
+     * @param serializer The serializer
+     * @param locale The locale to translate with
+     * @return The serialized text
+     * @see TextSerializer#to(Text, Locale)
+     */
+    public final String to(TextSerializer serializer, Locale locale) {
+        return serializer.to(this, locale);
     }
 
     @Override
@@ -1006,119 +1030,6 @@ public abstract class Text implements TextRepresentable {
         }
 
         return builder.build();
-    }
-
-    private static TextFactory getFactory() {
-        return Sponge.getRegistry().getTextFactory();
-    }
-
-    /**
-     * Get a {@link TextSerializer} for the Mojangson representation of a
-     * {@link Text} object.
-     *
-     *
-     * @return The json serializer
-     */
-    public static TextSerializer json() {
-        return getFactory().json();
-    }
-
-    /**
-     * Get a {@link TextSerializer} for the TextXML representation of a
-     * {@link Text} object.
-     *
-     * @return The xml text serializer
-     */
-    public static TextSerializer xml() {
-        return getFactory().xml();
-    }
-
-    /**
-     * Returns the default legacy formatting character.
-     *
-     * @return The legacy formatting character
-     * @deprecated Legacy formatting codes are being phased out of Minecraft
-     */
-    @Deprecated
-    public static char getLegacyChar() {
-        return getFactory().getLegacyChar();
-    }
-
-    /**
-     * Return a representation that accepts and outputs legacy color codes,
-     * using the default legacy char {{@link #getLegacyChar()} .
-     *
-     * @return The appropriate legacy representation handler
-     */
-    @Deprecated
-    public static TextSerializer legacy() {
-        return legacy(getLegacyChar());
-    }
-
-    /**
-     * Return a representation that accepts and outputs legacy color codes,
-     * using the provided legacy character.
-     *
-     * @param legacyChar The legacy character to parse and output using
-     * @return The appropriate legacy representation handler
-     */
-    @Deprecated
-    public static TextSerializer legacy(char legacyChar) {
-        return getFactory().legacy(legacyChar);
-    }
-
-    /**
-     * Removes the legacy formatting character from a legacy string.
-     *
-     * @param text The legacy text as a String
-     * @return The stripped text
-     * @deprecated Legacy formatting codes are being phased out of Minecraft
-     */
-    @Deprecated
-    public static String stripCodes(String text) {
-        return stripCodes(text, getLegacyChar());
-    }
-
-    /**
-     * Removes the legacy formatting character from a legacy string.
-     *
-     * @param text The legacy text as a String
-     * @param color The color character to be replaced
-     * @return The stripped text
-     * @deprecated Legacy formatting codes are being phased out of Minecraft
-     */
-    @Deprecated
-    public static String stripCodes(String text, char color) {
-        return getFactory().stripLegacyCodes(text, color);
-    }
-
-    /**
-     * Replaces the given formatting character with the default legacy
-     * formatting character from a legacy string.
-     *
-     * @param text The legacy text as a String
-     * @param from The color character to be replaced
-     * @return The replaced text
-     * @deprecated Legacy formatting codes are being phased out of Minecraft
-     */
-    @Deprecated
-    public static String replaceCodes(String text, char from) {
-        return replaceCodes(text, from, getLegacyChar());
-    }
-
-    /**
-     * Replaces the given formatting character with another given formatting
-     * character from a legacy string.
-     *
-     * @param text The legacy text as a String
-     * @param from The color character to be replaced
-     * @param to The color character to replace with
-     * @return The replaced text
-     * @deprecated Legacy formatting codes are being phased out of Minecraft
-     */
-    @Deprecated
-    public static String replaceCodes(String text, char from, char to) {
-        return getFactory().replaceLegacyCodes(text, from, to);
     }
 
 }

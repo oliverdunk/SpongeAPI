@@ -91,7 +91,8 @@ public final class TextActions {
 
     /**
      * Creates a new {@link ClickAction} that will execute the given
-     * runnable on the server when clicked. The callback will expire after some amount of time (not particularly instantly, but not like
+     * runnable on the server when clicked. The callback will expire
+     * after some amount of time (not particularly instantly, but not like
      * overnight really either).
      *
      * @param callback The callback to execute

@@ -27,6 +27,7 @@ package org.spongepowered.api.command;
 import org.spongepowered.api.service.permission.Subject;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.sink.MessageSink;
+import org.spongepowered.api.text.translation.locale.Locales;
 
 import java.util.Locale;
 
@@ -54,7 +55,7 @@ public interface CommandSource extends Subject {
      * @return The locale used by this command source
      */
     default Locale getLocale() {
-        return Text.DEFAULT_LOCALE;
+        return Locales.DEFAULT;
     }
 
     /**

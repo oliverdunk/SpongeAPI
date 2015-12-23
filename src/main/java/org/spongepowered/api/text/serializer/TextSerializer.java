@@ -22,51 +22,65 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.api.text;
+package org.spongepowered.api.text.serializer;
 
+import org.spongepowered.api.CatalogType;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.translation.locale.Locales;
 import org.spongepowered.api.util.TextMessageException;
+import org.spongepowered.api.util.annotation.CatalogedBy;
 
 import java.util.Locale;
 
 /**
- * Interface for a certain representation of a Text object.
+ * Represents a serializer for {@link Text} instances that converts an input
+ * string into a formatted {@link Text} instance, or a {@link Text} instance
+ * into the string representation.
  */
-public interface TextSerializer {
+@CatalogedBy(TextSerializers.class)
+public interface TextSerializer extends CatalogType {
 
     /**
-     * Return a string representation of the provided text in a format that will be accepted by this serializer's {@link #from(String)} (String)}
+     * Returns a string representation of the provided {@link Text} in a format
+     * that will be accepted by this {@link TextSerializer}'s {@link #from(String)}
      * method.
      *
-     * @param text The text to convert to a string representation
-     * @return An appropriate string representation of this text
+     * @param text The text to serialize
+     * @return The string representation of this text
      */
-    String to(Text text);
+    default String to(Text text) {
+        return to(text, Locales.DEFAULT);
+    }
 
     /**
-     * Return a string representation of the provided text in a format that will be accepted by this serializer's {@link #from(String)} (String)}
+     * Returns a string representation of the provided {@link Text} in a format
+     * that will be accepted by this {@link TextSerializer}'s {@link #from(String)}
      * method and is appropriate for the given locale.
      *
      * @param text The text to serialize
      * @param locale The locale to serialize this text in
-     * @return An appropriate string representation of this text
+     * @return The string representation of this text
      */
     String to(Text text, Locale locale);
 
     /**
-     * Return a {@link Text} instance from an appropriately formatted string.
+     * Returns a {@link Text} instance from an appropriately formatted string.
      *
      * @param input The raw input to parse into a text
-     * @return An appropriate {@link Text} object from the input string
-     * @throws TextMessageException if an error occurs while parsing the input
+     * @return The parsed text for the input string
+     * @throws TextMessageException If an error occurs while parsing the input
      */
     Text from(String input) throws TextMessageException;
 
     /**
-     * Tries to return a {@link Text} instance from the provided input string. However, if the input string is not of a valid format, the returned
-     * {@link Text} object will be of the raw input, rather than throwing an exception.
+     * Tries to return a {@link Text} instance from the provided input string.
+     * However, if the input string is not of a valid format, the returned
+     * {@link Text} object will be of the raw input, rather than throwing an
+     * exception.
      *
      * @param input The raw input to try to parse into a text
-     * @return An appropriate {@link Text} object from the input string, or the raw input
+     * @return The parsed text for the input string, or the raw input
      */
     Text fromUnchecked(String input);
+
 }

@@ -34,6 +34,11 @@ public final class NamedLocales {
     private NamedLocales() {
     }
 
+    /**
+     * The default locale used when the receiver's locale is unknown.
+     */
+    public static final Locale DEFAULT = Locales.DEFAULT;
+
     public static final Locale AFRIKAANS = Locales.AF_ZA;
     public static final Locale ARABIC = Locales.AR_SA;
     public static final Locale ASTURIAN = Locales.AST_ES;

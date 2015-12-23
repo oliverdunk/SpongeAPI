@@ -28,8 +28,7 @@ import org.spongepowered.api.text.LiteralText;
 import org.spongepowered.api.text.ScoreText;
 import org.spongepowered.api.text.SelectorText;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.TextFactory;
-import org.spongepowered.api.text.TextSerializer;
+import org.spongepowered.api.text.serializer.TextSerializer;
 import org.spongepowered.api.text.TranslatableText;
 
 import java.util.List;

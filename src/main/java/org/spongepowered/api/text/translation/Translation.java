@@ -24,7 +24,7 @@
  */
 package org.spongepowered.api.text.translation;
 
-import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.translation.locale.Locales;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -57,7 +57,7 @@ public interface Translation {
      * @return The default translation
      */
     default String get() {
-        return get(Text.DEFAULT_LOCALE);
+        return get(Locales.DEFAULT);
     }
 
     /**
@@ -67,7 +67,7 @@ public interface Translation {
      * @return The default translation with the specified parameters
      */
     default String get(Object... args) {
-        return get(Text.DEFAULT_LOCALE, args);
+        return get(Locales.DEFAULT, args);
     }
 
     /**

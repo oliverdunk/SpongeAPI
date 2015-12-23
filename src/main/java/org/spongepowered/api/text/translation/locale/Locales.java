@@ -36,6 +36,12 @@ public final class Locales {
     private Locales() {
     }
 
+    /**
+     * Gets a locale for the specified locale code, e.g. {@code en_US}.
+     *
+     * @param locale The locale to lookup (e.g. {@code en_US}.
+     * @return The locale
+     */
     public static Locale of(String locale) {
         return Sponge.getRegistry().getLocale(locale);
     }
@@ -115,5 +121,10 @@ public final class Locales {
     public static final Locale VI_VN = new Locale("vi", "VN");
     public static final Locale ZH_CN = Locale.SIMPLIFIED_CHINESE;
     public static final Locale ZH_TW = Locale.TRADITIONAL_CHINESE;
+
+    /**
+     * The default locale used when the receiver's locale is unknown.
+     */
+    public static final Locale DEFAULT = EN_US;
 
 }
