@@ -278,8 +278,8 @@ public class SimpleCommandManager implements CommandManager {
                         .replace("\r", "\n")))); // I mean I guess somebody could be running this on like OS 9?
             }
             source.sendMessage(error(t("Error occurred while executing command: %s", excBuilder.build())));
-            this.log.error(Text.toPlain(t("Error occurred while executing command '%s' for source %s: %s", commandLine, source.toString(), String
-                    .valueOf(thr.getMessage()))), thr);
+            this.log.error(t("Error occurred while executing command '%s' for source %s: %s", commandLine, source.toString(), String
+                    .valueOf(thr.getMessage())).toPlain(), thr);
         }
         return CommandResult.empty();
     }

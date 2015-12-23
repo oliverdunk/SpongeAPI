@@ -38,13 +38,13 @@ public class TestTextFactoryTest {
     @Test
     public void testToPlainLiterals() {
         Text testText = Text.builder("Hello ").append(Text.of("world"), Text.of(", this is here")).build();
-        assertEquals("Hello world, this is here", Text.toPlain(testText));
+        assertEquals("Hello world, this is here", testText.toPlain());
     }
 
     @Test
     public void testToPlainTranslatables() {
         Text testText = Text.of(new FixedTranslation("This is a translated %s"), Text.of("string"));
-        assertEquals("This is a translated string", Text.toPlain(testText));
+        assertEquals("This is a translated string", testText.toPlain());
     }
 
 }

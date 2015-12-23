@@ -79,7 +79,7 @@ public class TextMessageException extends Exception {
     @Nullable
     public String getMessage() {
         Text message = getText();
-        return message == null ? null : Text.toPlain(message);
+        return message == null ? null : message.toPlain();
     }
 
     /**

@@ -190,7 +190,7 @@ class CommandFlags extends CommandElement {
                 }
             }
             Text usage = arg.getValue().getUsage(src);
-            if (Text.toPlain(usage).trim().length() > 0) {
+            if (usage.toPlain().trim().length() > 0) {
                 builder.add(" ");
                 builder.add(usage);
             }

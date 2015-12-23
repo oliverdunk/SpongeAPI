@@ -473,7 +473,7 @@ public final class GenericArguments {
         public void parse(CommandSource source, CommandArgs args, CommandContext context) throws ArgumentParseException {
             if (!args.hasNext()) {
                 if (this.element.getKey() != null && this.value != null) {
-                    context.putArg(Text.toPlain(this.element.getKey()), this.value);
+                    context.putArg(this.element.getKey().toPlain(), this.value);
                 }
                 return;
             }

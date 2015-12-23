@@ -71,7 +71,7 @@ public abstract class CommandElement {
         if (this.key instanceof TranslatableText) { // Use translation key
             return ((TranslatableText) this.key).getTranslation().getId();
         } else {
-            return Text.toPlain(this.key);
+            return this.key.toPlain();
         }
     }
 
