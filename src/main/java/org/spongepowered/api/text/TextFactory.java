@@ -28,18 +28,9 @@ import java.util.Locale;
 
 /**
  * Represents the required implementation for the static methods in
- * {@link Texts}.
+ * {@link Text}.
  */
 public interface TextFactory {
-
-    /**
-     * Returns a plain text representation of the {@link Text} without any
-     * formattings.
-     *
-     * @param text The text to convert
-     * @return The text converted to plain text
-     */
-    String toPlain(Text text);
 
     /**
      * Returns a plain text representation of the {@link Text} without any
@@ -64,6 +55,7 @@ public interface TextFactory {
      * @return The xml text serializer
      */
     TextRepresentation xml();
+
     /**
      * Returns the default legacy formatting character.
      *
@@ -78,7 +70,6 @@ public interface TextFactory {
      * @return The appropriate legacy representation handler
      */
     TextRepresentation legacy(char legacyChar);
-
 
     /**
      * Removes the legacy formatting character from a legacy string.

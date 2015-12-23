@@ -46,6 +46,7 @@ import org.spongepowered.api.text.translation.Translation;
 import org.spongepowered.api.text.translation.locale.NamedLocales;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -82,6 +83,8 @@ public abstract class Text implements TextRepresentable {
      * unknown.
      */
     public static final Locale DEFAULT_LOCALE = NamedLocales.ENGLISH;
+
+    public static Comparator<Text> PLAIN_COMPARATOR = (text1, text2) -> text1.toPlain().compareTo(text2.toPlain());
 
     protected final TextFormat format;
     protected final ImmutableList<Text> children;
