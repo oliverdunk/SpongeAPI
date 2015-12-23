@@ -221,7 +221,7 @@ public abstract class Text implements TextRepresentable {
      *
      * @return The text converted to plain text
      */
-    public String toPlain() {
+    public final String toPlain() {
         return toPlain(DEFAULT_LOCALE);
     }
 
@@ -232,7 +232,7 @@ public abstract class Text implements TextRepresentable {
      * @param locale The locale to translate
      * @return The text converted to plain text
      */
-    public String toPlain(Locale locale) {
+    public final String toPlain(Locale locale) {
         return getFactory().toPlain(this, locale);
     }
 
@@ -1013,23 +1013,23 @@ public abstract class Text implements TextRepresentable {
     }
 
     /**
-     * Get a {@link TextRepresentation} for the Mojangson representation of a
+     * Get a {@link TextSerializer} for the Mojangson representation of a
      * {@link Text} object.
      *
      *
      * @return The json serializer
      */
-    public static TextRepresentation json() {
+    public static TextSerializer json() {
         return getFactory().json();
     }
 
     /**
-     * Get a {@link TextRepresentation} for the TextXML representation of a
+     * Get a {@link TextSerializer} for the TextXML representation of a
      * {@link Text} object.
      *
      * @return The xml text serializer
      */
-    public static TextRepresentation xml() {
+    public static TextSerializer xml() {
         return getFactory().xml();
     }
 
@@ -1051,7 +1051,7 @@ public abstract class Text implements TextRepresentable {
      * @return The appropriate legacy representation handler
      */
     @Deprecated
-    public static TextRepresentation legacy() {
+    public static TextSerializer legacy() {
         return legacy(getLegacyChar());
     }
 
@@ -1063,7 +1063,7 @@ public abstract class Text implements TextRepresentable {
      * @return The appropriate legacy representation handler
      */
     @Deprecated
-    public static TextRepresentation legacy(char legacyChar) {
+    public static TextSerializer legacy(char legacyChar) {
         return getFactory().legacy(legacyChar);
     }
 

@@ -29,9 +29,8 @@ import org.spongepowered.api.text.ScoreText;
 import org.spongepowered.api.text.SelectorText;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.TextFactory;
-import org.spongepowered.api.text.TextRepresentation;
+import org.spongepowered.api.text.TextSerializer;
 import org.spongepowered.api.text.TranslatableText;
-import org.spongepowered.api.text.translation.Translatable;
 
 import java.util.List;
 import java.util.Locale;
@@ -76,12 +75,12 @@ public class TestTextFactory implements TextFactory {
     }
 
     @Override
-    public TextRepresentation json() {
+    public TextSerializer json() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public TextRepresentation xml() {
+    public TextSerializer xml() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -91,7 +90,7 @@ public class TestTextFactory implements TextFactory {
     }
 
     @Override
-    public TextRepresentation legacy(char legacyChar) {
+    public TextSerializer legacy(char legacyChar) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

@@ -43,18 +43,18 @@ public interface TextFactory {
     String toPlain(Text text, Locale locale);
 
     /**
-     * Get a {@link TextRepresentation} for the Mojangson representation of a {@link Text} object.
+     * Get a {@link TextSerializer} for the Mojangson representation of a {@link Text} object.
      *
      * @return The json serializer
      */
-    TextRepresentation json();
+    TextSerializer json();
 
     /**
-     * Get a {@link TextRepresentation} for the TextXML representation of a {@link Text} object.
+     * Get a {@link TextSerializer} for the TextXML representation of a {@link Text} object.
      *
      * @return The xml text serializer
      */
-    TextRepresentation xml();
+    TextSerializer xml();
 
     /**
      * Returns the default legacy formatting character.
@@ -69,7 +69,7 @@ public interface TextFactory {
      * @param legacyChar The legacy character to parse and output using
      * @return The appropriate legacy representation handler
      */
-    TextRepresentation legacy(char legacyChar);
+    TextSerializer legacy(char legacyChar);
 
     /**
      * Removes the legacy formatting character from a legacy string.

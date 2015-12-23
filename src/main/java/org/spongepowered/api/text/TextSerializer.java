@@ -31,7 +31,7 @@ import java.util.Locale;
 /**
  * Interface for a certain representation of a Text object.
  */
-public interface TextRepresentation {
+public interface TextSerializer {
 
     /**
      * Return a string representation of the provided text in a format that will be accepted by this serializer's {@link #from(String)} (String)}
