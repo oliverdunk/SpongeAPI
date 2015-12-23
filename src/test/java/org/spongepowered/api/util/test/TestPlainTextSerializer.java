@@ -28,24 +28,31 @@ import org.spongepowered.api.text.LiteralText;
 import org.spongepowered.api.text.ScoreText;
 import org.spongepowered.api.text.SelectorText;
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.serializer.TextSerializer;
 import org.spongepowered.api.text.TranslatableText;
+import org.spongepowered.api.text.serializer.SafeTextSerializer;
 
 import java.util.List;
 import java.util.Locale;
 
-/**
- * A {@link TextFactory} providing the most limited implementation necessary for performing unit tests.
- */
-public class TestTextFactory implements TextFactory {
+public class TestPlainTextSerializer implements SafeTextSerializer {
 
     @Override
-    public String toPlain(Text text) {
-        return toPlain(text, Locale.ROOT);
+    public String getId() {
+        return "plain";
     }
 
     @Override
-    public String toPlain(Text text, Locale locale) {
+    public String getName() {
+        return "PlainTextSerializer";
+    }
+
+    @Override
+    public Text from(String input) {
+        return Text.of(input);
+    }
+
+    @Override
+    public String to(Text text, Locale locale) {
         final StringBuilder ret = new StringBuilder();
         for (Text child : text.withChildren()) {
             if (child instanceof LiteralText) {
@@ -66,40 +73,11 @@ public class TestTextFactory implements TextFactory {
         for (int i = 0; i < ret.length; ++i) {
             Object current = args.get(i);
             if (current instanceof Text) {
-                current = toPlain(((Text) current), locale);
+                current = to((Text) current, locale);
             }
             ret[i] = current;
         }
         return ret;
     }
 
-    @Override
-    public TextSerializer json() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public TextSerializer xml() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public char getLegacyChar() {
-        return '§';
-    }
-
-    @Override
-    public TextSerializer legacy(char legacyChar) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public String stripLegacyCodes(String text, char code) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public String replaceLegacyCodes(String text, char from, char to) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }

@@ -24,7 +24,7 @@
  */
 package org.spongepowered.api.util.test;
 
-import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.serializer.TextSerializers;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -38,9 +38,9 @@ public class TestHooks {
     public static void initialize()  {
         if (INITIALIZED.compareAndSet(false, true)) {
             try {
-                Field textField = Text.class.getDeclaredField("factory");
-                textField.setAccessible(true);
-                textField.set(null, new TestTextFactory());
+                Field field = TextSerializers.class.getDeclaredField("PLAIN");
+                field.setAccessible(true);
+                field.set(null, new TestPlainTextSerializer());
             } catch (Exception e) {
                 throw new ExceptionInInitializerError(e);
             }
