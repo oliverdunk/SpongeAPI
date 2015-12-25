@@ -23,13 +23,4 @@
  * THE SOFTWARE.
  */
 
-package org.spongepowered.api.extra.fluid;
-
-public final class FluidTypes {
-
-    public static final FluidType WATER = null;
-    public static final FluidType LAVA = null;
-
-    private FluidTypes() { }
-
-}
+@org.spongepowered.api.util.annotation.NonnullByDefault package org.spongepowered.api.extra.fluid.data.manipulator.mutable;

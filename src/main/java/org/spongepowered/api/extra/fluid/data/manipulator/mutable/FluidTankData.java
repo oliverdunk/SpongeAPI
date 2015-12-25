@@ -23,13 +23,15 @@
  * THE SOFTWARE.
  */
 
-package org.spongepowered.api.extra.fluid;
+package org.spongepowered.api.extra.fluid.data.manipulator.mutable;
 
-public final class FluidTypes {
+import org.spongepowered.api.data.manipulator.DataManipulator;
+import org.spongepowered.api.data.value.mutable.ListValue;
+import org.spongepowered.api.extra.fluid.FluidStackSnapshot;
+import org.spongepowered.api.extra.fluid.data.manipulator.immutable.ImmutableFluidTankData;
 
-    public static final FluidType WATER = null;
-    public static final FluidType LAVA = null;
+public interface FluidTankData extends DataManipulator<FluidTankData, ImmutableFluidTankData> {
 
-    private FluidTypes() { }
+    ListValue<FluidStackSnapshot> fluids();
 
 }

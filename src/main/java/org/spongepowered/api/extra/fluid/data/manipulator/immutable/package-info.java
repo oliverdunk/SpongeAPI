@@ -23,13 +23,4 @@
  * THE SOFTWARE.
  */
 
-package org.spongepowered.api.extra.fluid.data;
-
-import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
-import org.spongepowered.api.extra.fluid.FluidStack;
-
-public interface ImmutableFluidData extends ImmutableDataManipulator<ImmutableFluidData, FluidData> {
-
-    FluidStack fluid();
-
-}
+@org.spongepowered.api.util.annotation.NonnullByDefault package org.spongepowered.api.extra.fluid.data.manipulator.immutable;

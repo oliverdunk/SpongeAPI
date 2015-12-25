@@ -23,13 +23,15 @@
  * THE SOFTWARE.
  */
 
-package org.spongepowered.api.extra.fluid.data;
+package org.spongepowered.api.extra.fluid.data.manipulator.immutable;
 
-import org.spongepowered.api.data.manipulator.DataManipulator;
-import org.spongepowered.api.extra.fluid.FluidStack;
+import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
+import org.spongepowered.api.data.value.immutable.ImmutableValue;
+import org.spongepowered.api.extra.fluid.FluidStackSnapshot;
+import org.spongepowered.api.extra.fluid.data.manipulator.mutable.FluidData;
 
-public interface FluidData extends DataManipulator<FluidData, ImmutableFluidData> {
+public interface ImmutableFluidData extends ImmutableDataManipulator<ImmutableFluidData, FluidData> {
 
-    FluidStack fluid();
+    ImmutableValue<FluidStackSnapshot> fluid();
 
 }

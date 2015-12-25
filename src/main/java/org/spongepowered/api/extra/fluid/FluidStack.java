@@ -25,8 +25,10 @@
 
 package org.spongepowered.api.extra.fluid;
 
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.DataHolder;
 import org.spongepowered.api.item.ItemTypes;
+import org.spongepowered.api.util.persistence.DataBuilder;
 
 /**
  * Represents a stack of a particular {@link FluidType} and
@@ -35,16 +37,69 @@ import org.spongepowered.api.item.ItemTypes;
  */
 public interface FluidStack extends DataHolder {
 
+    /**
+     * Creates a new {@link Builder} to make fluid stacks.
+     *
+     * @return The newly created builder
+     */
+    static Builder builder() {
+        return Sponge.getRegistry().createBuilder(Builder.class);
+    }
+
+    /**
+     * Gets the {@link FluidType} for this fluid stack.
+     *
+     * @return The fluid type of this stack
+     */
     FluidType getFluid();
 
     /**
+     * Gets the "volume" of this {@link FluidStack}. Note that the volume is
+     * measured in "milli buckets", otherwise read as {@code mB}. The scaling
+     * is as follows: 1 bucket = 1000mB, whereas 1 block usually equals 1000mB.
      *
-     * @return
+     * @return The volume in milli buckets
      */
     int getVolume();
 
+    /**
+     * Sets the desired volume for this stack
+     * @param volume
+     * @return
+     */
     FluidStack setVolume(int volume);
 
     FluidStackSnapshot createSnapshot();
+
+    interface Builder extends DataBuilder<FluidStack> {
+
+        Builder fluid(FluidType fluidType);
+
+        /**
+         *
+         * @param volume
+         * @return
+         */
+        Builder volume(int volume);
+
+        /**
+         * Resets and fills this builder with all the information from the
+         * provided {@link FluidStackSnapshot}.
+         *
+         * @param fluidStackSnapshot The fluid stack snapshot to copy data from
+         * @return This builder, for chaining
+         */
+        Builder from(FluidStackSnapshot fluidStackSnapshot);
+
+        /**
+         * Builds a new {@link FluidStack} based on the desired volume and
+         * {@link FluidType}. If either are not set (invalid), an
+         * {@link IllegalStateException} may be thrown.
+         *
+         * @return The newly created fluid stack
+         */
+        FluidStack build();
+
+    }
 
 }

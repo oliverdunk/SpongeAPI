@@ -22,14 +22,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package org.spongepowered.api.extra.fluid.data.property;
 
-package org.spongepowered.api.extra.fluid;
+import static com.google.common.base.Preconditions.checkArgument;
 
-public final class FluidTypes {
+import org.spongepowered.api.data.property.IntProperty;
 
-    public static final FluidType WATER = null;
-    public static final FluidType LAVA = null;
+/**
+ * Temperature of the fluid - completely arbitrary; higher temperature indicates
+ * that the fluid is hotter than air. Usually, depending on the implementation, the
+ * "hotter" the fluid, the more likely it is to make flamable blocks and entities
+ * catch on fire.
+ *
+ * Default value is approximately the real-life room temperature of water in degrees
+ * Kelvin, otherwise known as 300K.
+ */
+public class FluidTemperatureProperty extends IntProperty {
 
-    private FluidTypes() { }
+    public FluidTemperatureProperty(int value) {
+        super(value);
+        checkArgument(value >= 0, "Temperature of a fluid cannot be less than zero!");
+    }
 
+    public FluidTemperatureProperty(int value, Operator operator) {
+        super(value, operator);
+        checkArgument(value >= 0, "Temperature of a fluid cannot be less than zero!");
+    }
 }

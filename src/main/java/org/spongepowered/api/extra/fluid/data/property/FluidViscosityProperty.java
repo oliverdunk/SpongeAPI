@@ -22,15 +22,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package org.spongepowered.api.extra.fluid.data.property;
 
-package org.spongepowered.api.extra.fluid.data;
+import static com.google.common.base.Preconditions.checkArgument;
 
-import org.spongepowered.api.data.manipulator.ImmutableDataManipulator;
-import org.spongepowered.api.data.value.immutable.ImmutableListValue;
-import org.spongepowered.api.extra.fluid.FluidStackSnapshot;
+import org.spongepowered.api.data.property.IntProperty;
 
-public interface ImmutableFluidTankData extends ImmutableDataManipulator<ImmutableFluidTankData, FluidTankData> {
+/**
+ * Viscosity ("thickness") of the fluid - completely arbitrary; negative values
+ * are not valid. The default viscosity is closely approximated to that
+ * of what exists in real life water: <code>meter/second^2 * (x10^-3)</code>.
+ *
+ * Higher viscosity means that a fluid flows more slowly, like molasses.
+ * Lower viscosity means that a fluid flows more quickly, like alcohol.
+ *
+ */
+public class FluidViscosityProperty extends IntProperty {
 
-    ImmutableListValue<FluidStackSnapshot> fluids();
+    public FluidViscosityProperty(int value) {
+        super(value);
+        checkArgument(value >= 0, "Viscosity of a fluid cannot be less than zero!");
+    }
 
+    public FluidViscosityProperty(int value, Operator operator) {
+        super(value, operator);
+        checkArgument(value >= 0, "Viscosity of a fluid cannot be less than zero!");
+    }
 }
