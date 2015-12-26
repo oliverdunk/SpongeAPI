@@ -37,16 +37,6 @@ import java.util.Locale;
 public class TestPlainTextSerializer implements SafeTextSerializer {
 
     @Override
-    public String getId() {
-        return "plain";
-    }
-
-    @Override
-    public String getName() {
-        return "PlainTextSerializer";
-    }
-
-    @Override
     public Text parse(String input) {
         return Text.of(input);
     }

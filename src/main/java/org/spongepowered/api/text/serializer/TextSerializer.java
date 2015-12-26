@@ -24,11 +24,8 @@
  */
 package org.spongepowered.api.text.serializer;
 
-import org.spongepowered.api.CatalogType;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.translation.locale.Locales;
-import org.spongepowered.api.util.TextMessageException;
-import org.spongepowered.api.util.annotation.CatalogedBy;
 
 import java.util.Locale;
 
@@ -37,8 +34,7 @@ import java.util.Locale;
  * string into a formatted {@link Text} instance, or a {@link Text} instance
  * into the string representation.
  */
-@CatalogedBy(TextSerializers.class)
-public interface TextSerializer extends CatalogType {
+public interface TextSerializer {
 
     /**
      * Returns a string representation of the provided {@link Text} in a format
