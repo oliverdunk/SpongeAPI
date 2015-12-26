@@ -208,6 +208,15 @@ public abstract class Text implements TextRepresentable {
     }
 
     /**
+     * Returns whether this {@link Text} is empty.
+     *
+     * @return {@code true} if this text is empty
+     */
+    public final boolean isEmpty() {
+        return this == EMPTY;
+    }
+
+    /**
      * Returns a new {@link Builder} with the content, formatting and
      * actions of this text. This can be used to edit an otherwise immutable
      * {@link Text} instance.
