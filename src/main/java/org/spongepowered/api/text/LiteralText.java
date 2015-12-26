@@ -58,10 +58,8 @@ public class LiteralText extends Text {
      *
      * @param format The format of the text
      * @param children The immutable list of children of the text
-     * @param clickAction The click action of the text, or {@code null} for
-     *        none
-     * @param hoverAction The hover action of the text, or {@code null} for
-     *        none
+     * @param clickAction The click action of the text, or {@code null} for none
+     * @param hoverAction The hover action of the text, or {@code null} for none
      * @param shiftClickAction The shift click action of the text, or
      *        {@code null} for none
      * @param content The plain text content of the text
@@ -117,7 +115,6 @@ public class LiteralText extends Text {
      * @see LiteralText
      */
     public static class Builder extends Text.Builder {
-
 
         protected String content;
 

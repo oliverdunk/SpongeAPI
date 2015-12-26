@@ -62,15 +62,13 @@ public class ScoreText extends Text {
      *
      * @param format The format of the text
      * @param children The immutable list of children of the text
-     * @param clickAction The click action of the text, or {@code null} for
-     *        none
-     * @param hoverAction The hover action of the text, or {@code null} for
-     *        none
+     * @param clickAction The click action of the text, or {@code null} for none
+     * @param hoverAction The hover action of the text, or {@code null} for none
      * @param shiftClickAction The shift click action of the text, or
      *        {@code null} for none
      * @param score The score of the text
-     * @param override The text to override the score with, or {@code null}
-     *        for none
+     * @param override The text to override the score with, or {@code null} for
+     *        none
      */
     ScoreText(TextFormat format, ImmutableList<Text> children, @Nullable ClickAction<?> clickAction,
             @Nullable HoverAction<?> hoverAction, @Nullable ShiftClickAction<?> shiftClickAction,
@@ -151,8 +149,8 @@ public class ScoreText extends Text {
         }
 
         /**
-         * Constructs a new {@link Builder} with the formatting and actions of the
-         * specified {@link Text} and the given score.
+         * Constructs a new {@link Builder} with the formatting and actions of
+         * the specified {@link Text} and the given score.
          *
          * @param text The text to apply the properties from
          * @param score The score for the text builder
@@ -163,8 +161,8 @@ public class ScoreText extends Text {
         }
 
         /**
-         * Constructs a new {@link Builder} with the formatting, actions and score
-         * of the specified {@link ScoreText}.
+         * Constructs a new {@link Builder} with the formatting, actions and
+         * score of the specified {@link ScoreText}.
          *
          * @param text The text to apply the properties from
          */

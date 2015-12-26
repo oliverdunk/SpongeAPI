@@ -39,8 +39,8 @@ import org.spongepowered.api.text.translation.Translation;
 import javax.annotation.Nullable;
 
 /**
- * Represents a {@link Text} containing a {@link Translation} identifier
- * that gets translated into the current locale on the client.
+ * Represents a {@link Text} containing a {@link Translation} identifier that
+ * gets translated into the current locale on the client.
  *
  * @see Builder
  */
@@ -60,10 +60,8 @@ public class TranslatableText extends Text {
      *
      * @param format The format of the text
      * @param children The immutable list of children of the text
-     * @param clickAction The click action of the text, or {@code null} for
-     *        none
-     * @param hoverAction The hover action of the text, or {@code null} for
-     *        none
+     * @param clickAction The click action of the text, or {@code null} for none
+     * @param hoverAction The hover action of the text, or {@code null} for none
      * @param shiftClickAction The shift click action of the text, or
      *        {@code null} for none
      * @param translation The translation of the text
@@ -150,9 +148,8 @@ public class TranslatableText extends Text {
         }
 
         /**
-         * Constructs a new unformatted {@link Builder} from
-         * the given {@link org.spongepowered.api.text.translation.Translatable}
-         * .
+         * Constructs a new unformatted {@link Builder} from the given
+         * {@link org.spongepowered.api.text.translation.Translatable} .
          *
          * @param translatable The translatable for the builder
          * @param args The arguments for the translation
@@ -162,8 +159,8 @@ public class TranslatableText extends Text {
         }
 
         /**
-         * Constructs a new {@link Builder} with the formatting and actions
-         * of the specified {@link Text} and the given {@link Translation} and
+         * Constructs a new {@link Builder} with the formatting and actions of
+         * the specified {@link Text} and the given {@link Translation} and
          * arguments.
          *
          * @param text The text to apply the properties from
@@ -176,8 +173,8 @@ public class TranslatableText extends Text {
         }
 
         /**
-         * Constructs a new {@link Builder} with the formatting and actions
-         * of the specified {@link Text} and the given
+         * Constructs a new {@link Builder} with the formatting and actions of
+         * the specified {@link Text} and the given
          * {@link org.spongepowered.api.text.translation.Translatable}.
          *
          * @param text The text to apply the properties from
@@ -190,8 +187,8 @@ public class TranslatableText extends Text {
         }
 
         /**
-         * Constructs a new {@link Builder} with the formatting, actions
-         * and translation of the specified {@link TranslatableText}.
+         * Constructs a new {@link Builder} with the formatting, actions and
+         * translation of the specified {@link TranslatableText}.
          *
          * @param text The text to apply the properties from
          */

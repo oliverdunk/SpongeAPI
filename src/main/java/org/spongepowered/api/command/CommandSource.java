@@ -49,8 +49,7 @@ public interface CommandSource extends Subject {
     /**
      * Gets the locale used by this command source. If this
      * {@link CommandSource} does have a {@link Locale} configured or does not
-     * support configuring a {@link Locale}, {@link Text#DEFAULT_LOCALE} is
-     * used.
+     * support configuring a {@link Locale}, {@link Locales#DEFAULT} is used.
      *
      * @return The locale used by this command source
      */

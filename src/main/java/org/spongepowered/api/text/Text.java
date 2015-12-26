@@ -186,8 +186,8 @@ public abstract class Text implements TextRepresentable {
      * Returns the {@link ClickAction} executed on the client when this
      * {@link Text} gets clicked.
      *
-     * @return The click action of this text, or {@link Optional#empty()} if
-     *         not set
+     * @return The click action of this text, or {@link Optional#empty()} if not
+     *         set
      */
     public final Optional<ClickAction<?>> getClickAction() {
         return this.clickAction;
@@ -197,8 +197,8 @@ public abstract class Text implements TextRepresentable {
      * Returns the {@link HoverAction} executed on the client when this
      * {@link Text} gets hovered.
      *
-     * @return The hover action of this text, or {@link Optional#empty()} if
-     *         not set
+     * @return The hover action of this text, or {@link Optional#empty()} if not
+     *         set
      */
     public final Optional<HoverAction<?>> getHoverAction() {
         return this.hoverAction;
@@ -225,9 +225,9 @@ public abstract class Text implements TextRepresentable {
     }
 
     /**
-     * Returns a new {@link Builder} with the content, formatting and
-     * actions of this text. This can be used to edit an otherwise immutable
-     * {@link Text} instance.
+     * Returns a new {@link Builder} with the content, formatting and actions of
+     * this text. This can be used to edit an otherwise immutable {@link Text}
+     * instance.
      *
      * @return A new message builder with the content of this text
      */
@@ -409,8 +409,8 @@ public abstract class Text implements TextRepresentable {
 
         /**
          * Sets the text styles of this text. This will construct a composite
-         * {@link TextStyle} of the current style and the specified styles first and
-         * set it to the text.
+         * {@link TextStyle} of the current style and the specified styles first
+         * and set it to the text.
          *
          * @param styles The text styles to apply
          * @return This text builder
@@ -433,8 +433,8 @@ public abstract class Text implements TextRepresentable {
         }
 
         /**
-         * Sets the {@link ClickAction} that will be executed if the text is clicked
-         * in the chat.
+         * Sets the {@link ClickAction} that will be executed if the text is
+         * clicked in the chat.
          *
          * @param clickAction The new click action for the text
          * @return This text builder
@@ -456,8 +456,8 @@ public abstract class Text implements TextRepresentable {
         }
 
         /**
-         * Sets the {@link HoverAction} that will be executed if the text is hovered
-         * in the chat.
+         * Sets the {@link HoverAction} that will be executed if the text is
+         * hovered in the chat.
          *
          * @param hoverAction The new hover action for the text
          * @return This text builder
@@ -480,8 +480,8 @@ public abstract class Text implements TextRepresentable {
         }
 
         /**
-         * Sets the {@link ShiftClickAction} that will be executed if the text is
-         * shift-clicked in the chat.
+         * Sets the {@link ShiftClickAction} that will be executed if the text
+         * is shift-clicked in the chat.
          *
          * @param shiftClickAction The new shift click action for the text
          * @return This text builder
@@ -495,8 +495,8 @@ public abstract class Text implements TextRepresentable {
         /**
          * Returns a view of the current children of this builder.
          *
-         * <p>The returned list is unmodifiable, but not immutable. It will change
-         * if new children get added through this builder.</p>
+         * <p>The returned list is unmodifiable, but not immutable. It will
+         * change if new children get added through this builder.</p>
          *
          * @return An unmodifiable list of the current children
          * @see Text#getChildren()
@@ -535,7 +535,8 @@ public abstract class Text implements TextRepresentable {
         }
 
         /**
-         * Inserts the specified {@link Text} at the given position of this builder.
+         * Inserts the specified {@link Text} at the given position of this
+         * builder.
          *
          * @param pos The position to insert the texts to
          * @param children The texts to insert
@@ -551,7 +552,8 @@ public abstract class Text implements TextRepresentable {
         }
 
         /**
-         * Inserts the specified {@link Text} at the given position of this builder.
+         * Inserts the specified {@link Text} at the given position of this
+         * builder.
          *
          * @param pos The position to insert the texts to
          * @param children The texts to insert
@@ -606,7 +608,8 @@ public abstract class Text implements TextRepresentable {
         }
 
         /**
-         * Builds an immutable instance of the current state of this text builder.
+         * Builds an immutable instance of the current state of this text
+         * builder.
          *
          * @return An immutable {@link Text} with the current properties of this
          *         builder
@@ -685,8 +688,8 @@ public abstract class Text implements TextRepresentable {
     }
 
     /**
-     * Creates a {@link Text} with the specified char as plain text. The
-     * created text won't have any formatting or events configured.
+     * Creates a {@link Text} with the specified char as plain text. The created
+     * text won't have any formatting or events configured.
      *
      * @param content The contant of the text as char
      * @return The created text

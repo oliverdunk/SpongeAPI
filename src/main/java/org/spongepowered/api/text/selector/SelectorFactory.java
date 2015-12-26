@@ -32,7 +32,7 @@ import java.util.Set;
 
 /**
  * Represents the required implementation for the static methods in
- * {@link Selectors}, {@link Arguments} and {@link ArgumentTypes}.
+ * {@link Selector}, {@link Argument} and {@link ArgumentTypes}.
  */
 public interface SelectorFactory {
 

@@ -66,10 +66,10 @@ public final class TextSerializers {
      * {@code &cHello &eSponge!}, would refer to a red and yellow formatted
      * text.</p>
      *
-     * <p><b>Note:</b> Unlike the {@link #LEGACY} {@link TextSerializer} this
-     * is safe to use as simple {@link Text} format for plugins as long as you
-     * keep in mind that it does not support additional {@link Text} features
-     * such as {@link ClickAction}s or {@link HoverAction}s.</p>
+     * <p><b>Note:</b> Unlike the {@link #LEGACY} {@link TextSerializer} this is
+     * safe to use as simple {@link Text} format for plugins as long as you keep
+     * in mind that it does not support additional {@link Text} features such as
+     * {@link ClickAction}s or {@link HoverAction}s.</p>
      *
      * @see LegacyTextSerializer
      */

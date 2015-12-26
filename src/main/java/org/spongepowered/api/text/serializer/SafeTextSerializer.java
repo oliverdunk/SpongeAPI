@@ -27,9 +27,8 @@ package org.spongepowered.api.text.serializer;
 import org.spongepowered.api.text.Text;
 
 /**
- * Represents a {@link TextSerializer} that accepts input in any format and
- * will therefore never throw an exception when parsing a serialized
- * {@link Text}.
+ * Represents a {@link TextSerializer} that accepts input in any format and will
+ * therefore never throw an exception when parsing a serialized {@link Text}.
  *
  * @see TextSerializer
  */

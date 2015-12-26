@@ -133,7 +133,7 @@ public final class ArgumentTypes {
      */
     public static final ArgumentType.Invertible<EntityType> ENTITY_TYPE = null;
 
-
+    @SuppressWarnings("deprecation")
     static SelectorFactory getFactory() {
         return Sponge.getRegistry().getSelectorFactory();
     }

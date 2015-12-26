@@ -55,10 +55,9 @@ public abstract class CommandElement {
 
     /**
      * Return the plain key, to be used when looking up this command element in
-     * a {@link CommandContext}. If the key is a
-     * {@link Text.TranslatableText}, this is the
-     * translation's id. Otherwise, this is the result of
-     * {@link Texts#toPlain(Text)}.
+     * a {@link CommandContext}. If the key is a {@link TranslatableText}, this
+     * is the translation's id. Otherwise, this is the result of
+     * {@link Text#toPlain()}.
      *
      * @return the raw key
      */

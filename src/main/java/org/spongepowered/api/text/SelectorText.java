@@ -39,8 +39,8 @@ import org.spongepowered.api.text.selector.Selector;
 import javax.annotation.Nullable;
 
 /**
- * Represents a {@link Text} containing a selector that will be replaced by
- * the names of the matching entities on the client.
+ * Represents a {@link Text} containing a selector that will be replaced by the
+ * names of the matching entities on the client.
  *
  * @see Selector
  * @see Builder
@@ -59,10 +59,8 @@ public class SelectorText extends Text {
      *
      * @param format The format of the text
      * @param children The immutable list of children of the text
-     * @param clickAction The click action of the text, or {@code null} for
-     *        none
-     * @param hoverAction The hover action of the text, or {@code null} for
-     *        none
+     * @param clickAction The click action of the text, or {@code null} for none
+     * @param hoverAction The hover action of the text, or {@code null} for none
      * @param shiftClickAction The shift click action of the text, or
      *        {@code null} for none
      * @param selector The selector of the text
@@ -123,8 +121,7 @@ public class SelectorText extends Text {
         protected Selector selector;
 
         /**
-         * Constructs a new unformatted {@link Builder} with the given
-         * selector.
+         * Constructs a new unformatted {@link Builder} with the given selector.
          *
          * @param selector The selector for the builder
          */

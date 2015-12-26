@@ -38,8 +38,8 @@ public interface TextSerializer {
 
     /**
      * Returns a string representation of the provided {@link Text} in a format
-     * that will be accepted by this {@link TextSerializer}'s {@link #parse(String)}
-     * method.
+     * that will be accepted by this {@link TextSerializer}'s
+     * {@link #parse(String)} method.
      *
      * @param text The text to serialize
      * @return The string representation of this text
@@ -50,8 +50,8 @@ public interface TextSerializer {
 
     /**
      * Returns a string representation of the provided {@link Text} in a format
-     * that will be accepted by this {@link TextSerializer}'s {@link #parse(String)}
-     * method and is appropriate for the given locale.
+     * that will be accepted by this {@link TextSerializer}'s
+     * {@link #parse(String)} method and is appropriate for the given locale.
      *
      * @param text The text to serialize
      * @param locale The locale to serialize this text in
