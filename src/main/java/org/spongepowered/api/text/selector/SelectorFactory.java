@@ -33,7 +33,10 @@ import java.util.Set;
 /**
  * Represents the required implementation for the static methods in
  * {@link Selector}, {@link Argument} and {@link ArgumentTypes}.
+ *
+ * @deprecated Internal use only.
  */
+@Deprecated
 public interface SelectorFactory {
 
     /**
