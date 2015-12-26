@@ -411,7 +411,7 @@ public abstract class Text implements TextRepresentable {
          * @see Text#getClickAction()
          */
         public final Optional<ClickAction<?>> getClickAction() {
-            return Optional.<ClickAction<?>>ofNullable(this.clickAction);
+            return Optional.ofNullable(this.clickAction);
         }
 
         /**
@@ -434,7 +434,7 @@ public abstract class Text implements TextRepresentable {
          * @see Text#getHoverAction()
          */
         public final Optional<HoverAction<?>> getHoverAction() {
-            return Optional.<HoverAction<?>>ofNullable(this.hoverAction);
+            return Optional.ofNullable(this.hoverAction);
         }
 
         /**
@@ -458,7 +458,7 @@ public abstract class Text implements TextRepresentable {
          * @see Text#getShiftClickAction()
          */
         public final Optional<ShiftClickAction<?>> getShiftClickAction() {
-            return Optional.<ShiftClickAction<?>>ofNullable(this.shiftClickAction);
+            return Optional.ofNullable(this.shiftClickAction);
         }
 
         /**
@@ -617,15 +617,18 @@ public abstract class Text implements TextRepresentable {
             return Objects.hashCode(this.format, this.clickAction, this.hoverAction, this.shiftClickAction, this.children);
         }
 
-        @Override
-        public String toString() {
+        protected Objects.ToStringHelper toStringHelper() {
             return Objects.toStringHelper(Builder.class)
                     .add("format", this.format)
                     .add("children", this.children)
                     .add("clickAction", this.clickAction)
                     .add("hoverAction", this.hoverAction)
-                    .add("shiftClickAction", this.shiftClickAction)
-                    .toString();
+                    .add("shiftClickAction", this.shiftClickAction);
+        }
+
+        @Override
+        public final String toString() {
+            return toStringHelper().toString();
         }
 
         @Override

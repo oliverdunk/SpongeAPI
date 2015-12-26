@@ -278,12 +278,10 @@ public class TranslatableText extends Text {
         }
 
         @Override
-        public String toString() {
-            return Objects.toStringHelper(this)
-                    .addValue(super.toString())
-                    .add("translation", this.translation)
-                    .add("arguments", this.arguments)
-                    .toString();
+        protected Objects.ToStringHelper toStringHelper() {
+            return super.toStringHelper()
+                    .addValue(this.translation)
+                    .add("arguments", this.arguments);
         }
 
         @Override

@@ -251,12 +251,10 @@ public class ScoreText extends Text {
         }
 
         @Override
-        public String toString() {
-            return Objects.toStringHelper(this)
-                    .addValue(super.toString())
-                    .add("score", this.score)
-                    .add("override", this.override)
-                    .toString();
+        protected Objects.ToStringHelper toStringHelper() {
+            return super.toStringHelper()
+                    .addValue(this.score)
+                    .add("override", this.override);
         }
 
         @Override

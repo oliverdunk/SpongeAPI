@@ -208,11 +208,9 @@ public class SelectorText extends Text {
         }
 
         @Override
-        public String toString() {
-            return Objects.toStringHelper(this)
-                    .addValue(super.toString())
-                    .add("selector", this.selector)
-                    .toString();
+        protected Objects.ToStringHelper toStringHelper() {
+            return super.toStringHelper()
+                    .addValue(this.selector);
         }
 
         @Override

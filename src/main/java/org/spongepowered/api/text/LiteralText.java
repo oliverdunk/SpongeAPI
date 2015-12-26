@@ -225,11 +225,9 @@ public class LiteralText extends Text {
         }
 
         @Override
-        public String toString() {
-            return Objects.toStringHelper(this)
-                    .addValue(super.toString())
-                    .add("content", this.content)
-                    .toString();
+        protected Objects.ToStringHelper toStringHelper() {
+            return super.toStringHelper()
+                    .addValue(this.content);
         }
 
         @Override
