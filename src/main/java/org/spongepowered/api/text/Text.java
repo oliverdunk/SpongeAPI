@@ -55,17 +55,17 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 /**
- * Represents an immutable instance of formatted text that can be displayed on
- * the client. Each instance consists of content and a list of children texts
- * appended after the content of this text. The content of the text is available
- * through one of the subclasses.
+ * Represents an immutable tree-structure of formatted (text) components. Each
+ * instance consists of content and a list of children texts appended after the
+ * content of this text. The content of the text is available through one of
+ * the subclasses.
  *
  * <p>Text is primarily used for sending formatted chat messages to players, but
  * also in other places like books or signs.</p>
  *
- * <p>Text instances can be either directly created through the available
- * constructor or using the {@link Builder} available through one of the
- * {@link Text#builder()} methods, which is the recommended way.</p>
+ * <p>Text instances can be created through the available {@link #of()} methods
+ * or using one of the {@link Builder}s available through one of the
+ * {@link #builder()} methods.</p>
  *
  * @see Text#builder()
  * @see Builder
