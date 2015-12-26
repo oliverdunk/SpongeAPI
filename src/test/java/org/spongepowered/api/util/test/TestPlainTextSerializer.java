@@ -30,6 +30,7 @@ import org.spongepowered.api.text.SelectorText;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.TranslatableText;
 import org.spongepowered.api.text.serializer.SafeTextSerializer;
+import org.spongepowered.api.text.translation.locale.Locales;
 
 import java.util.List;
 import java.util.Locale;
@@ -42,13 +43,14 @@ public class TestPlainTextSerializer implements SafeTextSerializer {
     }
 
     @Override
-    public String serialize(Text text, Locale locale) {
+    public String serialize(Text text) {
         final StringBuilder ret = new StringBuilder();
         for (Text child : text.withChildren()) {
             if (child instanceof LiteralText) {
                 ret.append(((LiteralText) child).getContent());
             } else if (child instanceof TranslatableText) {
-                ret.append(((TranslatableText) child).getTranslation().get(locale, convertArgs(((TranslatableText) child).getArguments(), locale)));
+                ret.append(((TranslatableText) child).getTranslation().get(Locales.DEFAULT,
+                        convertArgs(((TranslatableText) child).getArguments(), Locales.DEFAULT)));
             } else if (child instanceof ScoreText) {
                 ret.append(((ScoreText) child).getScore().getScore());
             } else if (child instanceof SelectorText) {
@@ -63,7 +65,7 @@ public class TestPlainTextSerializer implements SafeTextSerializer {
         for (int i = 0; i < ret.length; ++i) {
             Object current = args.get(i);
             if (current instanceof Text) {
-                current = serialize((Text) current, locale);
+                current = serialize((Text) current);
             }
             ret[i] = current;
         }

@@ -49,7 +49,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import javax.annotation.Nullable;
@@ -244,17 +243,6 @@ public abstract class Text implements TextRepresentable {
     }
 
     /**
-     * Returns a plain text representation of this {@link Text} without any
-     * formatting.
-     *
-     * @param locale The locale to translate with
-     * @return This text converted to plain text
-     */
-    public final String toPlain(Locale locale) {
-        return to(TextSerializers.PLAIN, locale);
-    }
-
-    /**
      * Serializes this {@link Text} using the specified {@link TextSerializer}.
      *
      * @param serializer The serializer
@@ -263,18 +251,6 @@ public abstract class Text implements TextRepresentable {
      */
     public final String to(TextSerializer serializer) {
         return serializer.serialize(this);
-    }
-
-    /**
-     * Serializes this {@link Text} using the specified {@link TextSerializer}.
-     *
-     * @param serializer The serializer
-     * @param locale The locale to translate with
-     * @return The serialized text
-     * @see TextSerializer#serialize(Text, Locale)
-     */
-    public final String to(TextSerializer serializer, Locale locale) {
-        return serializer.serialize(this, locale);
     }
 
     @Override

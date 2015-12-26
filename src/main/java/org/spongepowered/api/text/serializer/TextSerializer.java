@@ -25,9 +25,6 @@
 package org.spongepowered.api.text.serializer;
 
 import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.translation.locale.Locales;
-
-import java.util.Locale;
 
 /**
  * Represents a serializer for {@link Text} instances that converts an input
@@ -44,20 +41,7 @@ public interface TextSerializer {
      * @param text The text to serialize
      * @return The string representation of this text
      */
-    default String serialize(Text text) {
-        return serialize(text, Locales.DEFAULT);
-    }
-
-    /**
-     * Returns a string representation of the provided {@link Text} in a format
-     * that will be accepted by this {@link TextSerializer}'s
-     * {@link #parse(String)} method and is appropriate for the given locale.
-     *
-     * @param text The text to serialize
-     * @param locale The locale to serialize this text in
-     * @return The string representation of this text
-     */
-    String serialize(Text text, Locale locale);
+    String serialize(Text text);
 
     /**
      * Returns a {@link Text} instance from an appropriately formatted string.
