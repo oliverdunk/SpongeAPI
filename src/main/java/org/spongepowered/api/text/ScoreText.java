@@ -127,7 +127,7 @@ public class ScoreText extends Text {
     protected Objects.ToStringHelper toStringHelper() {
         return super.toStringHelper()
                 .addValue(this.score)
-                .add("override", this.override);
+                .add("override", this.override.orElse(null));
     }
 
     /**

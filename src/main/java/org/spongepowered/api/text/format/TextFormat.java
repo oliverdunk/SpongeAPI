@@ -140,6 +140,16 @@ public final class TextFormat {
         return new TextFormat(this.style.and(format.style), color);
     }
 
+    /**
+     * Returns whether this {@link TextFormat} has no color and format
+     * specified.
+     *
+     * @return If the format does not contain a color or any styles
+     */
+    public boolean isEmpty() {
+        return this.color == TextColors.NONE && this.style.isEmpty();
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(this.style, this.color);

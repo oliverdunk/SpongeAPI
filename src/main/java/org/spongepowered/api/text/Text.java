@@ -293,11 +293,12 @@ public abstract class Text implements TextRepresentable {
 
     protected Objects.ToStringHelper toStringHelper() {
         return Objects.toStringHelper(Text.class)
-                .add("format", this.format)
-                .add("children", this.children)
-                .add("clickAction", this.clickAction)
-                .add("hoverAction", this.hoverAction)
-                .add("shiftClickAction", this.shiftClickAction);
+                .omitNullValues()
+                .add("format", this.format.isEmpty() ? null : this.format)
+                .add("children", this.children.isEmpty() ? null : this.children)
+                .add("clickAction", this.clickAction.orElse(null))
+                .add("hoverAction", this.hoverAction.orElse(null))
+                .add("shiftClickAction", this.shiftClickAction.orElse(null));
     }
 
     @Override
@@ -628,8 +629,9 @@ public abstract class Text implements TextRepresentable {
 
         protected Objects.ToStringHelper toStringHelper() {
             return Objects.toStringHelper(Builder.class)
-                    .add("format", this.format)
-                    .add("children", this.children)
+                    .omitNullValues()
+                    .add("format", this.format.isEmpty() ? null : this.format)
+                    .add("children", this.children.isEmpty() ? null : this.children)
                     .add("clickAction", this.clickAction)
                     .add("hoverAction", this.hoverAction)
                     .add("shiftClickAction", this.shiftClickAction);

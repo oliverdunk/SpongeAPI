@@ -433,7 +433,7 @@ public class TextStyle {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return Objects.toStringHelper(TextStyle.class)
                 .omitNullValues()
                 .add("bold", this.bold.orElse(null))
                 .add("italic", this.italic.orElse(null))
