@@ -55,14 +55,6 @@ import java.util.Locale;
 public interface Player extends Humanoid, User, LocatedSource, RemoteSource, Viewer {
 
     /**
-     * Gets the locale used by the player.
-     *
-     * @return The player's locale
-     */
-    @Override
-    Locale getLocale();
-
-    /**
      * Gets the appropriate {@link PlayerConnection} linking this Player
      * to a client.
      *
