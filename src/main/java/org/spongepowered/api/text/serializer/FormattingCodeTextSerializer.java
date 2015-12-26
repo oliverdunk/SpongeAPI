@@ -36,17 +36,17 @@ package org.spongepowered.api.text.serializer;
  * @see <a href="http://minecraft.gamepedia.com/Formatting_codes">
  *     Formatting codes on the Minecraft Wiki</a>
  */
-public interface LegacyTextSerializer extends SafeTextSerializer {
+public interface FormattingCodeTextSerializer extends SafeTextSerializer {
 
     /**
-     * Returns the formatting character for this {@link LegacyTextSerializer}.
+     * Returns the formatting character for this {@link FormattingCodeTextSerializer}.
      *
      * @return The formatting character
      */
-    char getChar();
+    char getCharacter();
 
     /**
-     * Removes the color codes for this {@link LegacyTextSerializer} from a
+     * Removes the color codes for this {@link FormattingCodeTextSerializer} from a
      * string.
      *
      * @param text The string
@@ -66,15 +66,15 @@ public interface LegacyTextSerializer extends SafeTextSerializer {
 
     /**
      * Replaces the formatting codes in the specified string with a different
-     * character for the specified {@link LegacyTextSerializer},
+     * character for the specified {@link FormattingCodeTextSerializer},
      * e.g. {@code &cHello &eSponge! -> $cHello $eSponge!}
      *
      * @param text The string to replace the formatting codes in
      * @param serializer The serializer to replace for
      * @return The replaced text
      */
-    default String replaceCodes(String text, LegacyTextSerializer serializer) {
-        return replaceCodes(text, serializer.getChar());
+    default String replaceCodes(String text, FormattingCodeTextSerializer serializer) {
+        return replaceCodes(text, serializer.getCharacter());
     }
 
 }

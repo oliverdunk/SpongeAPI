@@ -26,7 +26,10 @@ package org.spongepowered.api.text.serializer;
 
 /**
  * Internal factory for {@link TextSerializer}s.
+ *
+ * @deprecated Internal use only, use {@link TextSerializers} instead.
  */
+@Deprecated
 public interface TextSerializerFactory {
 
     /**
@@ -36,6 +39,6 @@ public interface TextSerializerFactory {
      * @param legacyChar The legacy character to parse and output using
      * @return The appropriate legacy representation handler
      */
-    LegacyTextSerializer getLegacyTextSerializer(char legacyChar);
+    FormattingCodeTextSerializer getFormattingCodeTextSerializer(char legacyChar);
 
 }

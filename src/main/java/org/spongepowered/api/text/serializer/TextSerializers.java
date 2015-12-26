@@ -44,36 +44,39 @@ public final class TextSerializers {
     public static final SafeTextSerializer PLAIN = null;
 
     /**
-     * The {@link LegacyTextSerializer} using the internal formatting char.
+     * The {@link FormattingCodeTextSerializer} using the internal formatting
+     * char.
      *
      * <p><b>Note:</b> This serializer is ONLY available for compatibility
      * reasons. Using texts with legacy formatting codes as-is, without using
-     * this {@link LegacyTextSerializer} is broken in many ways and should not
-     * be used anymore unless really necessary.</p>
+     * this {@link FormattingCodeTextSerializer} is broken in many ways and
+     * should not be used anymore unless really necessary. It is recommended to
+     * use a different text serializer such as {@link #FORMATTING_CODE}
+     * instead.</p>
      *
-     * @see LegacyTextSerializer
+     * @see FormattingCodeTextSerializer
      * @deprecated Legacy formatting codes are being phased out of Minecraft
      */
     @Deprecated
-    public static final LegacyTextSerializer LEGACY = null;
+    public static final FormattingCodeTextSerializer LEGACY = null;
 
     /**
-     * A {@link LegacyTextSerializer} for a simple {@link Text} representation
-     * similar to {@link #LEGACY} but using the formatting character {@code &}
-     * instead of the internal one.
+     * A {@link FormattingCodeTextSerializer} for a simple {@link Text}
+     * representatior similar to {@link #LEGACY} but using the formatting
+     * character {@code &} instead of the internal one.
      *
      * <p>Example of a string parsed by this {@link TextSerializer}
      * {@code &cHello &eSponge!}, would refer to a red and yellow formatted
      * text.</p>
      *
-     * <p><b>Note:</b> Unlike the {@link #LEGACY} {@link TextSerializer} this is
-     * safe to use as simple {@link Text} format for plugins as long as you keep
-     * in mind that it does not support additional {@link Text} features such as
-     * {@link ClickAction}s or {@link HoverAction}s.</p>
+     * <p><b>Note:</b> Unlike the {@link #LEGACY} {@link TextSerializer} this
+     * is safe to use as simple {@link Text} format for plugins as long as you
+     * keep in mind that it does not support additional {@link Text} features
+     * such as {@link ClickAction}s or {@link HoverAction}s.</p>
      *
-     * @see LegacyTextSerializer
+     * @see FormattingCodeTextSerializer
      */
-    public static final LegacyTextSerializer COLOR_CODE = null; // TODO: Naming
+    public static final FormattingCodeTextSerializer FORMATTING_CODE = null;
 
     /**
      * The {@link TextSerializer} for Mojang's JSON (<i>Mojangson</i>)
@@ -87,22 +90,20 @@ public final class TextSerializers {
     public static final TextSerializer TEXT_XML = null;
 
     /**
-     * Returns a representation that accepts and outputs legacy color codes,
-     * using the provided legacy character.
+     * Returns a representation that accepts and outputs formatting codes,
+     * using the provided formatting character.
      *
-     * @param legacyChar The legacy character to parse and output using
+     * @param formattingChar The formatting character to parse and serialize with
      * @return The appropriate legacy representation handler
-     *
-     * @deprecated Legacy formatting codes are being phased out of Minecraft
      */
-    @Deprecated
-    public static LegacyTextSerializer legacy(char legacyChar) {
-        if (legacyChar == LEGACY.getChar()) {
+    @SuppressWarnings("deprecation")
+    public static FormattingCodeTextSerializer formattingCode(char formattingChar) {
+        if (formattingChar == LEGACY.getCharacter()) {
             return LEGACY;
-        } else if (legacyChar == COLOR_CODE.getChar()) {
-            return COLOR_CODE;
+        } else if (formattingChar == FORMATTING_CODE.getCharacter()) {
+            return FORMATTING_CODE;
         } else {
-            return Sponge.getRegistry().getTextSerializerFactory().getLegacyTextSerializer(legacyChar);
+            return Sponge.getRegistry().getTextSerializerFactory().getFormattingCodeTextSerializer(formattingChar);
         }
     }
 
