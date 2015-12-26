@@ -659,7 +659,7 @@ public abstract class Text implements TextRepresentable {
     }
 
     /**
-     * Creates a {@link Text} with the specified plain text. The created message
+     * Creates a {@link Text} with the specified plain text. The created text
      * won't have any formatting or events configured.
      *
      * @param content The content of the text
@@ -671,6 +671,18 @@ public abstract class Text implements TextRepresentable {
             return LiteralText.EMPTY;
         }
         return new LiteralText(content);
+    }
+
+    /**
+     * Creates a {@link Text} with the specified char as plain text. The
+     * created text won't have any formatting or events configured.
+     *
+     * @param content The contant of the text as char
+     * @return The created text
+     * @see LiteralText
+     */
+    public static LiteralText of(char content) {
+        return new LiteralText(String.valueOf(content));
     }
 
     /**
@@ -866,6 +878,19 @@ public abstract class Text implements TextRepresentable {
      */
     public static LiteralText.Builder builder(String content) {
         return new LiteralText.Builder(content);
+    }
+
+    /**
+     * Creates a new unformatted {@link LiteralText.Builder} with the specified
+     * content.
+     *
+     * @param content The content of the text as char
+     * @return The created text builder
+     * @see LiteralText
+     * @see LiteralText.Builder
+     */
+    public static LiteralText.Builder builder(char content) {
+        return builder(String.valueOf(content));
     }
 
     /**
