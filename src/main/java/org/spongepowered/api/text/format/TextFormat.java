@@ -101,7 +101,7 @@ public final class TextFormat {
      * Returns a new {@link TextFormat} with the given style.
      *
      * @param style The style
-     * @return A new {@link TextFormat}
+     * @return The new text format
      */
     public final TextFormat style(TextStyle style) {
         return new TextFormat(style, this.color);
@@ -111,10 +111,33 @@ public final class TextFormat {
      * Returns a new {@link TextFormat} with the given color.
      *
      * @param color The color
-     * @return A new {@link TextFormat}
+     * @return The new text format
      */
     public final TextFormat color(TextColor color) {
         return new TextFormat(this.style, color);
+    }
+
+    /**
+     * Returns a new {@link TextFormat} that combines this and the given format.
+     * The given format takes higher priority than this one. Due to this the
+     * color will only fallback to this one if the given format's color is
+     * {@link TextColors#NONE}. If the given format's color is
+     * {@link TextColors#RESET} then {@link TextColors#NONE} will be used.
+     * Styles are combined using {@link TextStyle#and(TextStyle...)}.
+     *
+     * @param format The format to merge
+     * @return The new text format
+     */
+    public final TextFormat merge(TextFormat format) {
+        TextColor color = format.color;
+        // If the given format's color is NONE use this ones
+        if (color == TextColors.NONE) {
+            color = this.color;
+            // If the given format's color is RESET use NONE
+        } else if (color == TextColors.RESET) {
+            color = TextColors.NONE;
+        }
+        return new TextFormat(this.style.and(format.style), color);
     }
 
     @Override

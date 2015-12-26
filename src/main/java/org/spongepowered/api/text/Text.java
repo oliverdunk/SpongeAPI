@@ -734,18 +734,20 @@ public abstract class Text implements TextRepresentable {
      * @return The built text object
      */
     public static Text of(Object... objects) {
-        Text.Builder builder = builder();
+        // Shortcut for lonely TextRepresentables
+        if (objects.length == 1 && objects[0] instanceof TextRepresentable) {
+            return ((TextRepresentable) objects[0]).toText();
+        }
+
+        final Text.Builder builder = builder();
         TextFormat format = new TextFormat();
         HoverAction<?> hoverAction = null;
         ClickAction<?> clickAction = null;
         ShiftClickAction<?> shiftClickAction = null;
         boolean changedFormat = false;
 
-        if (objects.length == 1 && objects[0] instanceof TextRepresentable) {
-            return ((TextRepresentable) objects[0]).toText();
-        }
-
         for (Object obj : objects) {
+            // Text formatting + actions
             if (obj instanceof TextFormat) {
                 changedFormat = true;
                 format = (TextFormat) obj;
@@ -755,9 +757,6 @@ public abstract class Text implements TextRepresentable {
             } else if (obj instanceof TextStyle) {
                 changedFormat = true;
                 format = format.style(obj.equals(TextStyles.RESET) ? TextStyles.NONE : format.getStyle().and((TextStyle) obj));
-            } else if (obj instanceof TextRepresentable) {
-                changedFormat = true;
-                builder.append(((TextRepresentable) obj).toText());
             } else if (obj instanceof TextAction) {
                 changedFormat = true;
                 if (obj instanceof HoverAction) {
@@ -769,7 +768,27 @@ public abstract class Text implements TextRepresentable {
                 } else {
                     // Unsupported TextAction
                 }
+
+            } else if (obj instanceof TextRepresentable) {
+                // Special content
+                changedFormat = false;
+                Text.Builder childBuilder = ((TextRepresentable) obj).toText().toBuilder();
+                // Overwrite TextActions if present
+                if (hoverAction != null) {
+                    childBuilder.onHover(hoverAction);
+                }
+                if (clickAction != null) {
+                    childBuilder.onClick(clickAction);
+                }
+                if (shiftClickAction != null) {
+                    childBuilder.onShiftClick(shiftClickAction);
+                }
+                // Merge instead of overwrite format
+                childBuilder.format(childBuilder.getFormat().merge(format));
+                builder.append(childBuilder.build());
+
             } else {
+                // Simple content
                 changedFormat = false;
                 Text.Builder childBuilder;
 
@@ -777,6 +796,8 @@ public abstract class Text implements TextRepresentable {
                     childBuilder = builder((String) obj);
                 } else if (obj instanceof Translation) {
                     childBuilder = builder((Translation) obj);
+                } else if (obj instanceof Translatable) {
+                    childBuilder = builder(((Translatable) obj).getTranslation());
                 } else if (obj instanceof Selector) {
                     childBuilder = builder((Selector) obj);
                 } else if (obj instanceof Score) {
