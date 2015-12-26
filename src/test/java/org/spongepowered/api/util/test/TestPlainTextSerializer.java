@@ -47,12 +47,12 @@ public class TestPlainTextSerializer implements SafeTextSerializer {
     }
 
     @Override
-    public Text from(String input) {
+    public Text parse(String input) {
         return Text.of(input);
     }
 
     @Override
-    public String to(Text text, Locale locale) {
+    public String serialize(Text text, Locale locale) {
         final StringBuilder ret = new StringBuilder();
         for (Text child : text.withChildren()) {
             if (child instanceof LiteralText) {
@@ -73,7 +73,7 @@ public class TestPlainTextSerializer implements SafeTextSerializer {
         for (int i = 0; i < ret.length; ++i) {
             Object current = args.get(i);
             if (current instanceof Text) {
-                current = to((Text) current, locale);
+                current = serialize((Text) current, locale);
             }
             ret[i] = current;
         }

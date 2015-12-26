@@ -24,23 +24,46 @@
  */
 package org.spongepowered.api.text.serializer;
 
-import org.spongepowered.api.text.Text;
-
 /**
- * Represents a {@link TextSerializer} that accepts input in any format and
- * will therefore never throw an exception when parsing a serialized
- * {@link Text}.
- *
- * @see TextSerializer
+ * Thrown if a string fails to be parsed as formatted Text instance.
  */
-public interface SafeTextSerializer extends TextSerializer {
+public class TextParseException extends RuntimeException {
 
-    @Override
-    Text parse(String input);
+    private static final long serialVersionUID = 564822839621455085L;
 
-    @Override
-    default Text parseUnchecked(String input) {
-        return parse(input);
+    /**
+     * Constructs a new {@link TextParseException}.
+     */
+    public TextParseException() {
+    }
+
+    /**
+     * Constructs a new {@link TextParseException} with the specified message.
+     *
+     * @param message The exception message
+     */
+    public TextParseException(String message) {
+        super(message);
+    }
+
+    /**
+     * Constructs a new {@link TextParseException} with the specified message
+     * and cause.
+     *
+     * @param message The exception message
+     * @param cause The cause of this exception
+     */
+    public TextParseException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
+     * Constructs a new {@link TextParseException} with the specified cause.
+     *
+     * @param cause The cause of this exception
+     */
+    public TextParseException(Throwable cause) {
+        super(cause);
     }
 
 }

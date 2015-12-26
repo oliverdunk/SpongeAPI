@@ -42,35 +42,35 @@ public interface TextSerializer extends CatalogType {
 
     /**
      * Returns a string representation of the provided {@link Text} in a format
-     * that will be accepted by this {@link TextSerializer}'s {@link #from(String)}
+     * that will be accepted by this {@link TextSerializer}'s {@link #parse(String)}
      * method.
      *
      * @param text The text to serialize
      * @return The string representation of this text
      */
-    default String to(Text text) {
-        return to(text, Locales.DEFAULT);
+    default String serialize(Text text) {
+        return serialize(text, Locales.DEFAULT);
     }
 
     /**
      * Returns a string representation of the provided {@link Text} in a format
-     * that will be accepted by this {@link TextSerializer}'s {@link #from(String)}
+     * that will be accepted by this {@link TextSerializer}'s {@link #parse(String)}
      * method and is appropriate for the given locale.
      *
      * @param text The text to serialize
      * @param locale The locale to serialize this text in
      * @return The string representation of this text
      */
-    String to(Text text, Locale locale);
+    String serialize(Text text, Locale locale);
 
     /**
      * Returns a {@link Text} instance from an appropriately formatted string.
      *
      * @param input The raw input to parse into a text
      * @return The parsed text for the input string
-     * @throws TextMessageException If an error occurs while parsing the input
+     * @throws TextParseException If an error occurs while parsing the text
      */
-    Text from(String input) throws TextMessageException;
+    Text parse(String input) throws TextParseException;
 
     /**
      * Tries to return a {@link Text} instance from the provided input string.
@@ -81,6 +81,12 @@ public interface TextSerializer extends CatalogType {
      * @param input The raw input to try to parse into a text
      * @return The parsed text for the input string, or the raw input
      */
-    Text fromUnchecked(String input);
+    default Text parseUnchecked(String input) {
+        try {
+            return parse(input);
+        } catch (TextParseException e) {
+            return Text.of(input);
+        }
+    }
 
 }

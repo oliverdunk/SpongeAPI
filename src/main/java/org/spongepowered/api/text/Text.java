@@ -242,10 +242,10 @@ public abstract class Text implements TextRepresentable {
      *
      * @param serializer The serializer
      * @return The serialized text
-     * @see TextSerializer#to(Text)
+     * @see TextSerializer#serialize(Text)
      */
     public final String to(TextSerializer serializer) {
-        return serializer.to(this);
+        return serializer.serialize(this);
     }
 
     /**
@@ -254,10 +254,10 @@ public abstract class Text implements TextRepresentable {
      * @param serializer The serializer
      * @param locale The locale to translate with
      * @return The serialized text
-     * @see TextSerializer#to(Text, Locale)
+     * @see TextSerializer#serialize(Text, Locale)
      */
     public final String to(TextSerializer serializer, Locale locale) {
-        return serializer.to(this, locale);
+        return serializer.serialize(this, locale);
     }
 
     @Override

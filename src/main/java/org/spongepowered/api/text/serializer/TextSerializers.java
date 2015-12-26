@@ -84,7 +84,7 @@ public final class TextSerializers {
     /**
      * The {@link TextSerializer} for Sponge's TextXML format.
      */
-    public static final TextSerializer XML = null;
+    public static final TextSerializer TEXT_XML = null;
 
     /**
      * Returns a representation that accepts and outputs legacy color codes,
