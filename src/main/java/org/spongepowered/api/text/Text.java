@@ -81,10 +81,13 @@ public abstract class Text implements TextRepresentable {
      */
     public static final Text EMPTY = LiteralText.EMPTY;
 
+    static final char NEW_LINE_CHAR = '\n';
+    static final String NEW_LINE_STRING = "\n";
+
     /**
      * An unformatted {@link Text} that will start a new line (if supported).
      */
-    public static final LiteralText NEW_LINE = new LiteralText("\n");
+    public static final LiteralText NEW_LINE = new LiteralText(NEW_LINE_STRING);
 
     /**
      * A {@link Comparator} for texts that compares the plain text of two text
@@ -674,8 +677,11 @@ public abstract class Text implements TextRepresentable {
     public static LiteralText of(String content) {
         if (checkNotNull(content, "content").isEmpty()) {
             return LiteralText.EMPTY;
+        } else if (content.equals(NEW_LINE_STRING)) {
+            return NEW_LINE;
+        } else {
+            return new LiteralText(content);
         }
-        return new LiteralText(content);
     }
 
     /**
@@ -687,7 +693,11 @@ public abstract class Text implements TextRepresentable {
      * @see LiteralText
      */
     public static LiteralText of(char content) {
-        return new LiteralText(String.valueOf(content));
+        if (content == NEW_LINE_CHAR) {
+            return NEW_LINE;
+        } else {
+            return new LiteralText(String.valueOf(content));
+        }
     }
 
     /**

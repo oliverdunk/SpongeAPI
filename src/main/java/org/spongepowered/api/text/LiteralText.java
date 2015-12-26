@@ -44,13 +44,9 @@ import javax.annotation.Nullable;
  */
 public class LiteralText extends Text {
 
-    static final LiteralText EMPTY = new LiteralText();
+    static final LiteralText EMPTY = new LiteralText("");
 
     protected final String content;
-
-    LiteralText() {
-        this("");
-    }
 
     LiteralText(String content) {
         this.content = checkNotNull(content, "content");
@@ -193,7 +189,7 @@ public class LiteralText extends Text {
                     && this.shiftClickAction == null) {
                 if (this.content.isEmpty()) {
                     return EMPTY;
-                } else if (this.content.equals(NEW_LINE.content)) {
+                } else if (this.content.equals(NEW_LINE_STRING)) {
                     return NEW_LINE;
                 }
             }
