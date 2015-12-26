@@ -82,6 +82,11 @@ public abstract class Text implements TextRepresentable {
     public static final Text EMPTY = LiteralText.EMPTY;
 
     /**
+     * An unformatted {@link Text} that will start a new line (if supported).
+     */
+    public static final LiteralText NEW_LINE = new LiteralText("\n");
+
+    /**
      * A {@link Comparator} for texts that compares the plain text of two text
      * instances.
      */

@@ -190,10 +190,13 @@ public class LiteralText extends Text {
         @Override
         public LiteralText build() {
             // Special case for empty builder
-            if (this.content.isEmpty() && this.format.getColor() == TextColors.NONE && this.format.getStyle().isEmpty()
-                    && this.children.isEmpty() && this.clickAction == null && this.hoverAction == null
+            if (this.format.isEmpty() && this.children.isEmpty() && this.clickAction == null && this.hoverAction == null
                     && this.shiftClickAction == null) {
-                return EMPTY;
+                if (this.content.isEmpty()) {
+                    return EMPTY;
+                } else if (this.content.equals(NEW_LINE.content)) {
+                    return NEW_LINE;
+                }
             }
 
             return new LiteralText(
