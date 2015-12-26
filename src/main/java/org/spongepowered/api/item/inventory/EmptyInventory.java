@@ -42,6 +42,11 @@ public class EmptyInventory implements Inventory {
     private static FixedTranslation TRANSLATION_EMPTY = new FixedTranslation("empty");
 
     @Override
+    public Translation getTranslation() {
+        return TRANSLATION_EMPTY;
+    }
+
+    @Override
     public ItemStack poll() {
         return ItemStackSnapshot.NONE.createStack();
     }
@@ -177,8 +182,4 @@ public class EmptyInventory implements Inventory {
         return Collections.emptyIterator();
     }
 
-    @Override
-    public Translation getName() {
-        return TRANSLATION_EMPTY;
-    }
 }

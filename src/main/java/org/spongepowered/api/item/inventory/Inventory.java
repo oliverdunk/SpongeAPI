@@ -24,10 +24,10 @@
  */
 package org.spongepowered.api.item.inventory;
 
-import org.spongepowered.api.Nameable;
 import org.spongepowered.api.data.Property;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.inventory.transaction.InventoryTransactionResult;
+import org.spongepowered.api.text.translation.Translatable;
 import org.spongepowered.api.text.translation.Translation;
 
 import java.util.Collection;
@@ -41,7 +41,7 @@ import java.util.Queue;
  * <p>TODO Flesh out javadoc from proposal document. For now, see proposal doc
  * here: https://github.com/SpongePowered/SpongeAPI/pull/443</p>
  */
-public interface Inventory extends Iterable<Inventory>, Nameable {
+public interface Inventory extends Iterable<Inventory>, Translatable {
 
     EmptyInventory EMPTY = new EmptyInventory();
 
