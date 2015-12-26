@@ -25,6 +25,7 @@
 package org.spongepowered.api.text.translation;
 
 import org.spongepowered.api.text.translation.locale.Locales;
+import org.spongepowered.api.text.translation.locale.NamedLocales;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -40,7 +41,7 @@ import java.util.ResourceBundle;
  * they're not given they will be filled with empty text.</p>
  *
  * <p>While the client has multiple locales available, server-side vanilla
- * translations support only {@link Locale#ENGLISH}.</p>
+ * translations usually support only {@link NamedLocales#ENGLISH}.</p>
  */
 public interface Translation {
 
