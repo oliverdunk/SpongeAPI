@@ -611,7 +611,7 @@ public final class GenericArguments {
 
         @Override
         public Text getUsage(CommandSource context) {
-            return Text.of(this.element.getUsage(context), CommandMessageFormatting.PLUS_TEXT);
+            return Text.of(this.element.getUsage(context), CommandMessageFormatting.STAR_TEXT);
         }
     }
 
@@ -798,7 +798,7 @@ public final class GenericArguments {
 
         @Override
         public Text getUsage(CommandSource src) {
-            return Text.of(CommandMessageFormatting.LT_TEXT, getKey(), CommandMessageFormatting.ELIPSES_TEXT, CommandMessageFormatting.GT_TEXT);
+            return Text.of(CommandMessageFormatting.LT_TEXT, getKey(), CommandMessageFormatting.ELLIPSIS_TEXT, CommandMessageFormatting.GT_TEXT);
         }
     }
 

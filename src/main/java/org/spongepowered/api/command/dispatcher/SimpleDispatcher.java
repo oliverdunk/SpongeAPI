@@ -26,7 +26,6 @@ package org.spongepowered.api.command.dispatcher;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.spongepowered.api.util.SpongeApiTranslationHelper.t;
-import static org.spongepowered.api.command.CommandMessageFormatting.NEWLINE_TEXT;
 import static org.spongepowered.api.command.CommandMessageFormatting.SPACE_TEXT;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -382,7 +381,7 @@ public final class SimpleDispatcher implements Dispatcher {
                     .onClick(TextActions.suggestCommand("/" + mapping.getPrimaryAlias())).build(),
                     SPACE_TEXT, description.orElse(mapping.getCallable().getUsage(source)));
             if (it.hasNext()) {
-                build.append(NEWLINE_TEXT);
+                build.append(Text.NEW_LINE);
             }
         }
         return Optional.of(build.build());

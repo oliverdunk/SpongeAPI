@@ -28,13 +28,16 @@ import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
 public class CommandMessageFormatting {
+
+    private CommandMessageFormatting() {
+    }
+
     public static final Text PIPE_TEXT = Text.of("|");
     public static final Text SPACE_TEXT = Text.of(" ");
-    public static final Text PLUS_TEXT = Text.of("*");
-    public static final Text NEWLINE_TEXT = Text.of('\n');
+    public static final Text STAR_TEXT = Text.of("*");
     public static final Text LT_TEXT = Text.of("<");
     public static final Text GT_TEXT = Text.of(">");
-    public static final Text ELIPSES_TEXT = Text.of("…");
+    public static final Text ELLIPSIS_TEXT = Text.of("…");
 
     /**
      * Format text to be output as an error directly to a sender. Not necessary when creating an exception to be thrown

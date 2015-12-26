@@ -377,11 +377,11 @@ public final class CommandSpec implements CommandCallable {
         Text.Builder builder = Text.builder();
         Optional<Text> desc = getShortDescription(source);
         if (desc.isPresent()) {
-            builder.append(desc.get(), CommandMessageFormatting.NEWLINE_TEXT);
+            builder.append(desc.get(), Text.NEW_LINE);
         }
         builder.append(getUsage(source));
         if (this.extendedDescription != null) {
-            builder.append(CommandMessageFormatting.NEWLINE_TEXT, this.extendedDescription);
+            builder.append(Text.NEW_LINE, this.extendedDescription);
         }
         return Optional.of(builder.build());
     }
