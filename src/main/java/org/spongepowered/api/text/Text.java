@@ -29,7 +29,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterators;
-import com.google.common.collect.Lists;
 import org.spongepowered.api.scoreboard.Score;
 import org.spongepowered.api.text.action.ClickAction;
 import org.spongepowered.api.text.action.HoverAction;
@@ -45,6 +44,9 @@ import org.spongepowered.api.text.serializer.TextSerializers;
 import org.spongepowered.api.text.translation.Translatable;
 import org.spongepowered.api.text.translation.Translation;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -303,7 +305,7 @@ public abstract class Text implements TextRepresentable {
     public static abstract class Builder implements TextRepresentable {
 
         protected TextFormat format = new TextFormat();
-        protected List<Text> children = Lists.newArrayList();
+        protected List<Text> children = new ArrayList<>();
         @Nullable protected ClickAction<?> clickAction;
         @Nullable protected HoverAction<?> hoverAction;
         @Nullable protected ShiftClickAction<?> shiftClickAction;
@@ -321,9 +323,8 @@ public abstract class Text implements TextRepresentable {
          * @param text The text to copy the values from
          */
         Builder(Text text) {
-            checkNotNull(text, "text");
             this.format = text.format;
-            this.children = Lists.newArrayList(text.children);
+            this.children = new ArrayList<>(text.children);
             this.clickAction = text.clickAction.orElse(null);
             this.hoverAction = text.hoverAction.orElse(null);
             this.shiftClickAction = text.shiftClickAction.orElse(null);
@@ -369,7 +370,7 @@ public abstract class Text implements TextRepresentable {
          * @see Text#getColor()
          */
         public Builder color(TextColor color) {
-            this.format = this.format.color(checkNotNull(color, "color"));
+            this.format = this.format.color(color);
             return this;
         }
 
@@ -394,7 +395,7 @@ public abstract class Text implements TextRepresentable {
          */
         // TODO: Make sure this is the correct behaviour
         public Builder style(TextStyle... styles) {
-            this.format = this.format.style(this.format.getStyle().and(checkNotNull(styles, "styles")));
+            this.format = this.format.style(this.format.getStyle().and(styles));
             return this;
         }
 
@@ -489,8 +490,31 @@ public abstract class Text implements TextRepresentable {
          * @see Text#getChildren()
          */
         public Builder append(Text... children) {
-            for (Text child : checkNotNull(children, "children")) {
-                checkNotNull(child, "child");
+            Collections.addAll(this.children, children);
+            return this;
+        }
+
+        /**
+         * Appends the specified {@link Text} to the end of this text.
+         *
+         * @param children The texts to append
+         * @return This text builder
+         * @see Text#getChildren()
+         */
+        public Builder append(Collection<? extends Text> children) {;
+            this.children.addAll(children);
+            return this;
+        }
+
+        /**
+         * Appends the specified {@link Text} to the end of this text.
+         *
+         * @param children The texts to append
+         * @return This text builder
+         * @see Text#getChildren()
+         */
+        public Builder append(Iterable<? extends Text> children) {;
+            for (Text child : children) {
                 this.children.add(child);
             }
             return this;
@@ -503,12 +527,13 @@ public abstract class Text implements TextRepresentable {
          * @return This text builder
          * @see Text#getChildren()
          */
-        public Builder append(Iterable<? extends Text> children) {
-            for (Text child : checkNotNull(children, "children")) {
-                this.children.add(checkNotNull(child, "child"));
+        public Builder append(Iterator<? extends Text> children) {
+            while (children.hasNext()) {
+                this.children.add(children.next());
             }
             return this;
         }
+
 
         /**
          * Inserts the specified {@link Text} at the given position of this
@@ -521,9 +546,22 @@ public abstract class Text implements TextRepresentable {
          * @see Text#getChildren()
          */
         public Builder insert(int pos, Text... children) {
-            for (Text child : checkNotNull(children, "children")) {
-                this.children.add(pos++, checkNotNull(child, "child"));
-            }
+            this.children.addAll(pos, Arrays.asList(children));
+            return this;
+        }
+
+        /**
+         * Inserts the specified {@link Text} at the given position of this
+         * builder.
+         *
+         * @param pos The position to insert the texts to
+         * @param children The texts to insert
+         * @return This text builder
+         * @throws IndexOutOfBoundsException If the position is out of range
+         * @see Text#getChildren()
+         */
+        public Builder insert(int pos, Collection<? extends Text> children) {
+            this.children.addAll(pos, children);
             return this;
         }
 
@@ -538,9 +576,39 @@ public abstract class Text implements TextRepresentable {
          * @see Text#getChildren()
          */
         public Builder insert(int pos, Iterable<? extends Text> children) {
-            for (Text child : checkNotNull(children, "children")) {
-                this.children.add(pos++, checkNotNull(child, "child"));
+            for (Text child : children) {
+                this.children.add(pos++, child);
             }
+            return this;
+        }
+
+        /**
+         * Inserts the specified {@link Text} at the given position of this
+         * builder.
+         *
+         * @param pos The position to insert the texts to
+         * @param children The texts to insert
+         * @return This text builder
+         * @throws IndexOutOfBoundsException If the position is out of range
+         * @see Text#getChildren()
+         */
+        public Builder insert(int pos, Iterator<? extends Text> children) {
+            while (children.hasNext()) {
+                this.children.add(pos++, children.next());
+            }
+            return this;
+        }
+
+
+        /**
+         * Removes the specified {@link Text} from this builder.
+         *
+         * @param children The texts to remove
+         * @return This text builder
+         * @see Text#getChildren()
+         */
+        public Builder remove(Text... children) {
+            this.children.removeAll(Arrays.asList(children));
             return this;
         }
 
@@ -551,10 +619,8 @@ public abstract class Text implements TextRepresentable {
          * @return This text builder
          * @see Text#getChildren()
          */
-        public Builder remove(Text... children) {
-            for (Text child : checkNotNull(children, "children")) {
-                this.children.remove(checkNotNull(child));
-            }
+        public Builder remove(Collection<? extends Text> children) {
+            this.children.removeAll(children);
             return this;
         }
 
@@ -566,8 +632,22 @@ public abstract class Text implements TextRepresentable {
          * @see Text#getChildren()
          */
         public Builder remove(Iterable<? extends Text> children) {
-            for (Text child : checkNotNull(children, "children")) {
-                this.children.remove(checkNotNull(child));
+            for (Text child : children) {
+                this.children.remove(child);
+            }
+            return this;
+        }
+
+        /**
+         * Removes the specified {@link Text} from this builder.
+         *
+         * @param children The texts to remove
+         * @return This text builder
+         * @see Text#getChildren()
+         */
+        public Builder remove(Iterator<? extends Text> children) {
+            while (children.hasNext()) {
+                this.children.remove(children.next());
             }
             return this;
         }
@@ -1034,6 +1114,16 @@ public abstract class Text implements TextRepresentable {
     }
 
     /**
+     * Joins a sequence of text objects together.
+     *
+     * @param texts The texts to join
+     * @return A text object that joins the given text objects
+     */
+    public static Text join(Iterator<? extends Text> texts) {
+        return builder().append(texts).build();
+    }
+
+    /**
      * Joins a sequence of text objects together along with a separator.
      *
      * @param separator The separator
@@ -1043,7 +1133,7 @@ public abstract class Text implements TextRepresentable {
     public static Text join(Text separator, Text[] texts) {
         switch (texts.length) {
             case 0:
-                return of();
+                return EMPTY;
             case 1:
                 return texts[0];
             default:
@@ -1093,17 +1183,31 @@ public abstract class Text implements TextRepresentable {
      * @return A text object that joins the given text objects
      */
     public static Text join(Text separator, Iterable<? extends Text> texts) {
-        Text.Builder builder = builder();
-        boolean appendSeparator = false;
-        for (Text text : texts) {
-            if (appendSeparator) {
-                builder.append(separator);
-            } else {
-                appendSeparator = true;
-            }
+        return join(separator, texts.iterator());
+    }
 
-            builder.append(text);
+    /**
+     * Joins a sequence of text objects together along with a separator.
+     *
+     * @param separator The separator
+     * @param texts An iterator for the texts to join
+     * @return A text object that joins the given text objects
+     */
+    public static Text join(Text separator, Iterator<? extends Text> texts) {
+        if (!texts.hasNext()) {
+            return EMPTY;
         }
+
+        Text first = texts.next();
+        if (!texts.hasNext()) {
+            return first;
+        }
+
+        Text.Builder builder = builder().append(first);
+        do {
+            builder.append(separator);
+            builder.append(texts.next());
+        } while (texts.hasNext());
 
         return builder.build();
     }

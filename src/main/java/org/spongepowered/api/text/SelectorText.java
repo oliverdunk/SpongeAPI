@@ -36,6 +36,9 @@ import org.spongepowered.api.text.format.TextFormat;
 import org.spongepowered.api.text.format.TextStyle;
 import org.spongepowered.api.text.selector.Selector;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import javax.annotation.Nullable;
 
 /**
@@ -209,6 +212,10 @@ public class SelectorText extends Text {
             return super.toStringHelper()
                     .addValue(this.selector);
         }
+        @Override
+        public Builder format(TextFormat format) {
+            return (Builder) super.format(format);
+        }
 
         @Override
         public Builder color(TextColor color) {
@@ -241,7 +248,17 @@ public class SelectorText extends Text {
         }
 
         @Override
+        public Builder append(Collection<? extends Text> children) {
+            return (Builder) super.append(children);
+        }
+
+        @Override
         public Builder append(Iterable<? extends Text> children) {
+            return (Builder) super.append(children);
+        }
+
+        @Override
+        public Builder append(Iterator<? extends Text> children) {
             return (Builder) super.append(children);
         }
 
@@ -251,7 +268,17 @@ public class SelectorText extends Text {
         }
 
         @Override
+        public Builder insert(int pos, Collection<? extends Text> children) {
+            return (Builder) super.insert(pos, children);
+        }
+
+        @Override
         public Builder insert(int pos, Iterable<? extends Text> children) {
+            return (Builder) super.insert(pos, children);
+        }
+
+        @Override
+        public Builder insert(int pos, Iterator<? extends Text> children) {
             return (Builder) super.insert(pos, children);
         }
 
@@ -261,7 +288,17 @@ public class SelectorText extends Text {
         }
 
         @Override
+        public Builder remove(Collection<? extends Text> children) {
+            return (Builder) super.remove(children);
+        }
+
+        @Override
         public Builder remove(Iterable<? extends Text> children) {
+            return (Builder) super.remove(children);
+        }
+
+        @Override
+        public Builder remove(Iterator<? extends Text> children) {
             return (Builder) super.remove(children);
         }
 

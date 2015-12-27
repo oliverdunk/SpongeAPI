@@ -49,8 +49,7 @@ public class TestPlainTextSerializer implements SafeTextSerializer {
             if (child instanceof LiteralText) {
                 ret.append(((LiteralText) child).getContent());
             } else if (child instanceof TranslatableText) {
-                ret.append(((TranslatableText) child).getTranslation().get(Locales.DEFAULT,
-                        convertArgs(((TranslatableText) child).getArguments(), Locales.DEFAULT)));
+                ret.append(((TranslatableText) child).getTranslation().get(Locales.DEFAULT, convertArgs(((TranslatableText) child).getArguments())));
             } else if (child instanceof ScoreText) {
                 ret.append(((ScoreText) child).getScore().getScore());
             } else if (child instanceof SelectorText) {
@@ -60,7 +59,7 @@ public class TestPlainTextSerializer implements SafeTextSerializer {
         return ret.toString();
     }
 
-    private Object[] convertArgs(List<Object> args, Locale locale) {
+    private Object[] convertArgs(List<Object> args) {
         Object[] ret = new Object[args.size()];
         for (int i = 0; i < ret.length; ++i) {
             Object current = args.get(i);
