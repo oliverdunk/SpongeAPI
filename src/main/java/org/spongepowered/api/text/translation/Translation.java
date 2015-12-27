@@ -41,7 +41,7 @@ import java.util.ResourceBundle;
  * they're not given they will be filled with empty text.</p>
  *
  * <p>While the client has multiple locales available, server-side vanilla
- * translations usually support only {@link NamedLocales#ENGLISH}.</p>
+ * translations usually support only {@link NamedLocales#AMERICAN_ENGLISH}.</p>
  */
 public interface Translation {
 

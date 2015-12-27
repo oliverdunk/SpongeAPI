@@ -54,7 +54,7 @@ public final class NamedLocales {
     public static final Locale CANADIAN_ENGLISH = Locales.EN_CA;
     public static final Locale BRITISH_ENGLISH = Locales.EN_GB;
     public static final Locale PIRATE_ENGLISH = Locales.EN_PT;
-    public static final Locale ENGLISH = Locales.EN_US;
+    public static final Locale AMERICAN_ENGLISH = Locales.EN_US;
     public static final Locale ESPERANTO = Locales.EO_UY;
     public static final Locale ARGENTINIAN_SPANISH = Locales.ES_AR;
     public static final Locale SPANISH = Locales.ES_ES;
