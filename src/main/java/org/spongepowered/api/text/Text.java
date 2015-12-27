@@ -1037,30 +1037,22 @@ public abstract class Text implements TextRepresentable {
      * Joins a sequence of text objects together along with a separator.
      *
      * @param separator The separator
-     * @param texts The texts to join
+     * @param first The first text to join
+     * @param others The texts to join
      * @return A text object that joins the given text objects
      */
-    public static Text join(Text separator, Text... texts) {
-        switch (texts.length) {
-            case 0:
-                return of();
-            case 1:
-                return texts[0];
-            default:
-                Text.Builder builder = builder();
-                boolean appendSeparator = false;
-                for (Text text : texts) {
-                    if (appendSeparator) {
-                        builder.append(separator);
-                    } else {
-                        appendSeparator = true;
-                    }
-
-                    builder.append(text);
-                }
-
-                return builder.build();
+    public static Text join(Text separator, Text first, Text... others) {
+        if (others.length == 0) {
+            return first;
         }
+
+        Text.Builder builder = builder().append(first);
+        for (Text text : others) {
+            builder.append(separator);
+            builder.append(text);
+        }
+
+        return builder.build();
     }
 
     /**
