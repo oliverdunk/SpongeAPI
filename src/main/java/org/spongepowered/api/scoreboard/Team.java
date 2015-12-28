@@ -148,6 +148,10 @@ public interface Team {
     /**
      * Gets whether friendly fire is enabled.
      *
+     * <p>This option only controls players attacking other players. It has no
+     * affect other entities attacking other entities, or players attacking
+     * other entities (or vice-versa).</p>
+     *
      * @return Whether friendly fire is enabled
      */
     boolean allowFriendlyFire();
@@ -288,6 +292,8 @@ public interface Team {
          *
          * <p>Display names may be truncated in order to meet an implementation-defined length limit.
          * In Vanilla, this is sixteen characters.</p>
+         *
+         * <p>By default, this is set to {@link #name(String)}</p>
          *
          * @param displayName The {@link Text} to set
          * @return This builder
